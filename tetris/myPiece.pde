@@ -32,5 +32,10 @@ public class myPiece {
   }
   
   public boolean isValid(int[][][] grid) {
+    // checks if position of piece is valid 
+    // returns true if yes, false if no 
+    // to be used in the rotate and fallDown methods 
+    
+    
   }
 }
