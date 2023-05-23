@@ -4,6 +4,11 @@ public class board{
   color[] colors; //converts number in grid to a color
   int linesCleared; //number of lines cleared
   
+  public board(color[] c){
+    grid = new int[22][10];
+    colors = c;
+    linesCleared = 0;
+  }
   public void spawnPiece(){
     // spawns the nextPiece on the top middle of the grid
     
