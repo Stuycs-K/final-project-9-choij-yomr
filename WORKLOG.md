@@ -15,13 +15,14 @@ in myPiece.pde
 ### 5/24
 
 still working on the skeleton + actually
-working on making those functions work  
+working on making those functions work and developing our worklog + readme 
 
 ## Joshua Choi
 
 ### 5/22
 
 created team, learning how to branch correctly, created my branch
+
 created classes + file names
 
 ### 5/23
@@ -30,6 +31,5 @@ worked on creating functions, variables, functions, and comments for said functi
 in Board.pde
 
 ### 5/24
-
-still working on the skeleton + actually
+still working on the skeleton for all classes + actually
 working on making those functions work  
