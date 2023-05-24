@@ -1,22 +1,35 @@
 # Work Log
 
-## GROUP MEMBER 1
+## Richard Yom
 
-### date x
+### 5/22
 
-info
+worked on creating files in git, learning how to correctly merge, and my branch
+creating classes + a little bit of README.md
 
-### date y
+### 5/23
 
-info
+worked on creating functions, variables, functions, and comments for said functions and variables for clarity
+in myPiece.pde
 
+### 5/24
 
-## GROUP MEMBER 2
+still working on the skeleton + actually
+working on making those functions work  
 
-### date x
+## Joshua Choi
 
-info
+### 5/22
 
-### date y
+created team, learning how to branch correctly, created my branch
+created classes + file names
 
-info
+### 5/23
+
+worked on creating functions, variables, functions, and comments for said functions and variables for clarity
+in Board.pde
+
+### 5/24
+
+still working on the skeleton + actually
+working on making those functions work  
