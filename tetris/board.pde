@@ -28,7 +28,7 @@ public class board{
     // case 2: holdPiece is not null
   }
   
-  public boolean clearline(int row){
+  public void clearline(int row){
     // tries to clear the line at int row
     // returns true if the line is cleared, false if not
     int counter = 0;
@@ -43,18 +43,12 @@ public class board{
         switchLine(i);
       }
     }
+    grid[0] = new int[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
   }
-  public void clearLines(int row){
-    // tries to clear row at int row 
-  }
-  
+
   public void switchLine(int row) {
     int[] temp = grid[row-1];
     grid[row] = temp;
-  }
-  
-  public void removeLine(int row){
-    // removes the line at row, assumes the row is full
   }
   
   public void addPiece(){
