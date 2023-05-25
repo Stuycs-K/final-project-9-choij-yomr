@@ -15,7 +15,11 @@ in myPiece.pde
 ### 5/24
 
 still working on the skeleton + actually
-working on making those functions work and developing our worklog + readme 
+working on making those functions work and developing our worklog + readme
+
+### 5/25
+
+finished README.md for the most part (adding the instructions image + fixing line breaks)
 
 ## Joshua Choi
 
@@ -33,3 +37,5 @@ in Board.pde
 ### 5/24
 still working on the skeleton for all classes + actually
 working on making those functions work  
+
+### 5/25
