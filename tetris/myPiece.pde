@@ -34,31 +34,59 @@ public class myPiece {
   }
   
   
-  public void rotatePiece(boolean direction) {
+  public void rotatePiece(int[][] grid, boolean direction) {
     // changes rotation of piece
     // if direction is true then it rotates right, if false then it rotates left
     // calls isValid(int[][] grid)
+    int newVersion = currentVersion;
+    // changes the version to what it will rotate to
+    if (direction){
+      newVersion+=1;
+    } else {
+      newVersion-=1;
+    }
+    if (newVersion == 4){
+      newVersion = 0;
+    } else if (newVersion == -1){
+      newVersion = 3;
+    }
+    // checks if the rotation is vaild
+    if (isValid(grid, newVersion)){
+      currentVersion = newVersion;
+    }
   }
   
   
   
-  public boolean fallDownOne() {
+  public boolean fallDownOne(int[][] grid) {
     // shifts piece down by one square 
     // returns true when movement is done 
     // returns false if movement is invalid 
-    return true;
+    if (isValid(grid, 1, 0)){
+      row+=1;
+      return true;
+    }
+    return false;
   }
   
-  public void fallDownAll() {
-    // moves piece all the way down 
+  public void fallDownAll(int[][] grid) {
+    // just calls fallDownOne until the block cannot fall down
+    while(fallDownOne(grid)){}
   }
   
   
-  public void move(int x) {
+  public void move(int[][] grid, int x) {
     // moves piece x squares to the right or left 
+    // x can be positive or negitive
+    
+    //checks if the movement isValid
+    if (isValid(grid, 0, x)){
+      col+=x;
+    }
+    
   }
   
-  public void pieceDisplay(int x, int y) {
+  public void pieceDisplayInGrid(int x, int y) {
     // displays the piece, x and y is where the grid is, use 
     // instance vars row and col to print where in the grid
   }
