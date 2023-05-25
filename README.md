@@ -2,11 +2,11 @@
 THIS DOCUMENT IS REQUIRED
 
 ## Group Info
-Name: 4Head Emulators
-Period 9 <br />
-Members: <br />
-- Joshua C. <br />
-- Richard Y. <br />
+Name: 4Head Emulators \
+Period 9 \
+Members: 
+- Joshua C.
+- Richard Y.
 
 
 ## Overview
