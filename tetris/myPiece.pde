@@ -33,14 +33,11 @@ public class myPiece {
     return pieceColor;
   }
   
-  
   public void rotatePiece(boolean direction) {
     // changes rotation of piece
     // if direction is true then it rotates right, if false then it rotates left
     // calls isValid(int[][] grid)
   }
-  
-  
   
   public boolean fallDownOne() {
     // shifts piece down by one square 
