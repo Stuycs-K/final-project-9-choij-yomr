@@ -34,10 +34,24 @@ public class myPiece {
   }
   
   
-  public void rotatePiece(boolean direction) {
+  public void rotatePiece(int[][] grid, boolean direction) {
     // changes rotation of piece
     // if direction is true then it rotates right, if false then it rotates left
     // calls isValid(int[][] grid)
+    int newVerison = currentVersion;
+    if (direction){
+      newVersion+=1;
+    } else {
+      newVersion-=1;
+    }
+    if (newVersion == 4){
+      newVersion = 0;
+    } else if (newVersion == -1){
+      newVersion = 3;
+    }
+    if (isValid(grid[][], newVersion)){
+      currentVersion = newVersion;
+    }
   }
   
   
