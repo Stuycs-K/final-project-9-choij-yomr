@@ -77,10 +77,16 @@ public class myPiece {
   
   public void move(int[][] grid, int x) {
     // moves piece x squares to the right or left 
+    // x can be positive or negitive
+    
+    //checks if the movement isValid
+    if (isValid(grid, 0, x)){
+      col+=x;
+    }
     
   }
   
-  public void pieceDisplay(int x, int y) {
+  public void pieceDisplayInGrid(int x, int y) {
     // displays the piece, x and y is where the grid is, use 
     // instance vars row and col to print where in the grid
   }
