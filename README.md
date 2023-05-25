@@ -31,3 +31,5 @@ various block combinations in order to not run out of space. By completing lines
 and by earning points you can get a new high score!
 
 Please look at the diagram below to see what certain keys do!
+
+![alt text](https://github.com/Stuycs-K/final-project-9-choij-yomr/blob/main/instructions.png?raw=true)
