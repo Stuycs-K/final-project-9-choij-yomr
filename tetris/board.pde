@@ -28,35 +28,49 @@ public class board{
     // case 2: holdPiece is not null
   }
   
-  public boolean clearline(int r){
-    // tries to clear the line at row r
+  public boolean clearline(int row){
+    // tries to clear the line at int row
     // returns true if the line is cleared, false if not
+    int counter = 0;
+    for (int i = 0; i < grid[row].length; i++) {
+      if (grid[row][i] == -1) {
+        counter += 1; 
+      } 
+    }
+    if (counter == 0) {
+      linesCleared += 1;
+      for (int i = row; i > 0; i--) {
+        switchLine(i);
+      }
+    }
   }
-  public void clearLines(){
-    //goes through the whole grid, and tries to clear every line
- 
+  public void clearLines(int row){
+    // tries to clear row at int row 
   }
   
-  
+  public void switchLine(int row) {
+    int[] temp = grid[row-1];
+    grid[row] = temp;
+  }
   
   public void removeLine(int row){
-    //removes the line at row, assumes the row is full
+    // removes the line at row, assumes the row is full
   }
   
   public void addPiece(){
-    //adds the currentPiece to the grid, makes nextPiece into currentPiece
+    // adds the currentPiece to the grid, makes nextPiece into currentPiece
   }
   
   public void printBoard(int x, int y){
-    //prints the board, calls printPiece
+    // prints the board, calls printPiece
     
-    //printing the nextPiece
+    // printing the nextPiece
     
-    //printing the holdPiece
+    // printing the holdPiece
     
-    //printing the grid
+    // printing the grid
     
-    //printing the currentPiece
+    // printing the currentPiece
   }
   
   
