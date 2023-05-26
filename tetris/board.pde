@@ -1,18 +1,18 @@
-public class board{
+public class Board{
   int[][] grid; // grid of the board, -1 for nothing, 0+ for colors
-  myPiece currentPiece, nextPiece, holdPiece; // the important pieces
+  MyPiece currentPiece, nextPiece, holdPiece; // the important pieces
   color[] colors; //converts number in grid to a color
   int linesCleared; //number of lines cleared
   int[][][][] allPieces; //an array of every possible piece
   boolean swappedHold; // to make sure you can only swap once per piece
   int[] rands; // to keep in track the pieces that have came up
   
-  public board(color[] c){
+  public Board(color[] c){
     grid = new int[22][10];
     colors = c;
     linesCleared = 0;
   }
-  public myPiece randomPiece(){
+  public MyPiece randomPiece(){
     // returns a randomPiece, following the tetris rules
     
   }

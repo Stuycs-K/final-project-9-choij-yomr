@@ -1,4 +1,4 @@
-public class myPiece {
+public class MyPiece {
   int row, col; // defining row, column
   int[][][] versions; // rotations of each piece
   int currentVersion; // defining index of versions int[][][]
@@ -6,7 +6,7 @@ public class myPiece {
   color pieceColor; // the color of the piece 
   
   
-  public myPiece(String piece){
+  public MyPiece(String piece){
     whichPiece(piece);
     currentVersion = 1;
     fallCounter = 0;
@@ -15,6 +15,19 @@ public class myPiece {
   public void whichPiece(String piece){
     // assigns the version var and color var depending on the string
     // also assigns the starting row and col depending on the string
+    
+    if (piece.equals("square")){ //square shape
+      pieceColor = color(255,255,0); //yellow
+      int[][] temp1 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
+      int[][] temp2 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
+      int[][] temp3 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
+      int[][] temp4 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
+      versions = new int[][][]{temp1, temp2, temp3, temp4};
+      row = 0; //starts at the top row
+      col = 4; // middle of the board
+    }
+    
+    
   }
   
   public int getFallCounter(){
