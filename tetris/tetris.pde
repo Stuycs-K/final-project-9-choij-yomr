@@ -8,8 +8,8 @@ void setup(){
   board = new Board();
   keyboardInput = new Controller();
   moveCounter = 0;
-  fallCd = 40;
-  moveCd = 10;
+  fallCd = 30;
+  moveCd = 8;
 }
 
 void draw() {
@@ -29,11 +29,15 @@ void draw() {
     moveCounter++;
   }
   if (keyboardInput.isPressed(Controller.myDOWN)){
-    fallCd = 10;
+    fallCd = 5;
   } else {
-    fallCd = 40;
+    fallCd = 30;
   }
   board.tick(fallCd);
+  for (int i = 0; i < 22; i++){
+    board.clearLine(i);
+  }
+  
   
   
 }

@@ -58,7 +58,7 @@ public class Board{
       grid[r + rowChange][c + colChange] = num;
     }
     currentPiece = nextPiece;
-    nextPiece = randomPiece(0);
+    nextPiece = spawnPiece();
   }
   
   public MyPiece spawnPiece(){
@@ -100,7 +100,7 @@ public class Board{
     addPiece();
   }
   
-  public void clearline(int row){
+  public void clearLine(int row){
     // tries to clear the line at int row
     // returns true if the line is cleared, false if not
     int counter = 0;
