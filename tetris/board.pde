@@ -72,6 +72,12 @@ public class Board{
     
   }
   
+  public void movePiece(int i){
+    if (currentPiece.isValid(grid, 0, i)){
+      currentPiece.setC(i);
+    }
+  }
+  
   public void clearline(int row){
     // tries to clear the line at int row
     // returns true if the line is cleared, false if not

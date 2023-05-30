@@ -48,6 +48,10 @@ public class MyPiece {
     row+=i;
   }
   
+  public void setC(int i){
+    col+=i;
+  }  
+  
   public int[][] currentVersion(){
     return versions[currentVersion];
   }
@@ -93,17 +97,6 @@ public class MyPiece {
   public void fallDownAll(int[][] grid) {
     // just calls fallDownOne until the block cannot fall down
     while (fallDownOne(grid)) {
-    }
-  }
-
-
-  public void move(int[][] grid, int x) {
-    // moves piece x squares to the right or left
-    // x can be positive or negitive
-
-    //checks if the movement isValid
-    if (isValid(grid, 0, x)) {
-      col+=x;
     }
   }
 
