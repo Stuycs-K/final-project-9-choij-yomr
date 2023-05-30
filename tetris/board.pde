@@ -21,6 +21,11 @@ public class Board{
     currentPiece = randomPiece(0);
     nextPiece = randomPiece(0);
   }
+  
+  public MyPiece getCurrentPiece(){
+    return currentPiece;
+  }
+  
   public MyPiece randomPiece(int changeOfR){
     // returns a randomPiece, following the tetris rules
     return new MyPiece("square", changeOfR);
@@ -77,6 +82,23 @@ public class Board{
       currentPiece.setC(i);
     }
   }
+  public boolean fallDownOne() {
+    // shifts piece down by one square
+    // returns true when movement is done
+    // returns false if movement is invalid
+    if (currentPiece.isValid(grid, 1, 0)) {
+      currentPiece.setR(1);
+      return true;
+    }
+    return false;
+  }
+
+  public void fallDownAll() {
+    // just calls fallDownOne until the block cannot fall down
+    while (fallDownOne()) {
+    }
+    addPiece();
+  }
   
   public void clearline(int row){
     // tries to clear the line at int row
@@ -128,6 +150,20 @@ public class Board{
     
     // printing the currentPiece
     currentPiece.pieceDisplayInGrid(x, y);
+  }
+  
+  public void resetFallCounter(){
+    currentPiece.resetCounter();
+  }
+  
+  public void tick(int fallCd){
+    // one tick of the falling down and board things (line clears)
+    if (currentPiece.getCounter() % fallCd == 0){ // falling is not every tick
+       if (!fallDownOne()){ // if the block cannot fall down
+          addPiece();
+       }
+    }
+    currentPiece.addCounter();
   }
   
   public void endGame(){

@@ -9,7 +9,7 @@ public class MyPiece {
   public MyPiece(String piece, int changeOfR) {
     whichPiece(piece, changeOfR);
     currentVersion = 1;
-    fallCounter = 0;
+    fallCounter = 1;
   }
 
   public void whichPiece(String piece, int changeOfR) {
@@ -28,7 +28,7 @@ public class MyPiece {
     }
   }
 
-  public int getFallCounter() {
+  public int getCounter() {
     return fallCounter;
   }
 
@@ -52,6 +52,13 @@ public class MyPiece {
     col+=i;
   }  
   
+  public void addCounter(){
+    fallCounter++;
+  }
+  
+  public void resetCounter(){
+    fallCounter = 1;
+  }
   public int[][] currentVersion(){
     return versions[currentVersion];
   }
@@ -83,22 +90,7 @@ public class MyPiece {
   }
 
 
-  public boolean fallDownOne(int[][] grid) {
-    // shifts piece down by one square
-    // returns true when movement is done
-    // returns false if movement is invalid
-    if (isValid(grid, 1, 0)) {
-      row+=1;
-      return true;
-    }
-    return false;
-  }
 
-  public void fallDownAll(int[][] grid) {
-    // just calls fallDownOne until the block cannot fall down
-    while (fallDownOne(grid)) {
-    }
-  }
 
   public void pieceDisplayInGrid(int x, int y) {
     // displays the piece, x and y is where the grid is, use

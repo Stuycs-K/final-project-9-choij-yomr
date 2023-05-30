@@ -7,6 +7,7 @@ class Controller {
 
   public Controller() {
     inputs = new boolean[3];
+    
   }
 
   boolean isPressed(int code) {
