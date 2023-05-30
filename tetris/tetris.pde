@@ -1,6 +1,6 @@
 Board board;
 Controller keyboardInput;
-int fallCd, moveCd, moveCounter;
+int fallCd, moveCd, moveCounter, rotateCd, rotateCounter;
 
 
 void setup(){
@@ -10,6 +10,8 @@ void setup(){
   moveCounter = 0;
   fallCd = 30;
   moveCd = 8;
+  rotateCounter = 0;
+  rotateCd = 20;
 }
 
 void draw() {
@@ -33,7 +35,21 @@ void draw() {
   } else {
     fallCd = 30;
   }
-  board.tick(fallCd);
+  if (keyboardInput.isRotating()){
+    if (rotateCounter % rotateCd == 0){
+      if (keyboardInput.isPressed(Controller.ROTATE_LEFT)) {
+        board.rotateLeft();
+      }
+      if (keyboardInput.isPressed(Controller.ROTATE_RIGHT)) {
+        board.rotateRight();  
+      }
+     
+      
+    }
+    rotateCounter++;
+  }
+  
+  board.fallTick(fallCd);
   for (int i = 0; i < 22; i++){
     board.clearLine(i);
   }
@@ -61,7 +77,13 @@ void keyReleased(){
     keyboardInput.release(keyCode);
     moveCounter = 0;
   } else {
+    
     keyboardInput.release(key);
+    if (key == 'z' || key == 'x'){
+      rotateCounter = 0;
+    }
+    
   }
+  
   
 }

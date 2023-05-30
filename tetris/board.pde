@@ -14,7 +14,7 @@ public class Board{
       Arrays.fill(grid[i], -1);
     }
     colors = new color[]{ color(255,255,0), // yellow
-                          
+                          color(0, 255, 255) //blue
                         };
                         
     linesCleared = 0;
@@ -28,7 +28,7 @@ public class Board{
   
   public MyPiece randomPiece(int changeOfR){
     // returns a randomPiece, following the tetris rules
-    return new MyPiece("square", changeOfR);
+    return new MyPiece("line", changeOfR);
   }
   
   public void swapHold(){
@@ -47,6 +47,8 @@ public class Board{
     int num = -1;
     if (currentPiece.getColor() == color(255,255,0)){
       num = 0; // index for yellow
+    } else if (currentPiece.getColor() == color(0,255,255)){
+      num = 1;
     }
     int r = currentPiece.getR();
     int c = currentPiece.getC();
@@ -98,6 +100,14 @@ public class Board{
     while (fallDownOne()) {
     }
     addPiece();
+  }
+  
+  public void rotateLeft(){
+    currentPiece.rotatePiece(grid, false);
+  }
+  
+  public void rotateRight(){
+    currentPiece.rotatePiece(grid, true);
   }
   
   public void clearLine(int row){
@@ -156,15 +166,17 @@ public class Board{
     currentPiece.resetCounter();
   }
   
-  public void tick(int fallCd){
+  public void fallTick(int cd){
     // one tick of the falling down and board things (line clears)
-    if (currentPiece.getCounter() % fallCd == 0){ // falling is not every tick
+    if (currentPiece.getCounter() % cd == 0){ // falling is not every tick
        if (!fallDownOne()){ // if the block cannot fall down
           addPiece();
        }
     }
     currentPiece.addCounter();
   }
+  
+  
   
   public void endGame(){
   }

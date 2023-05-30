@@ -8,7 +8,7 @@ public class MyPiece {
 
   public MyPiece(String piece, int changeOfR) {
     whichPiece(piece, changeOfR);
-    currentVersion = 1;
+    currentVersion = 0;
     fallCounter = 1;
   }
 
@@ -24,6 +24,15 @@ public class MyPiece {
       int[][] temp4 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
       versions = new int[][][]{temp1, temp2, temp3, temp4};
       row = 3 - changeOfR; //starts at the top row
+      col = 4; // middle of the board
+    } else if (piece.equals("line")){ // line shape
+      pieceColor = color(0, 255, 255); // blue
+      int[][] temp1 = new int[][] {{0, 0}, {0, -1}, {0, 1}, {0, 2}};
+      int[][] temp2 = new int[][] {{0, 1}, {-1, 1}, {1, 1}, {2, 1}};
+      int[][] temp3 = new int[][] {{-1, 0}, {-1, -1}, {-1, 1}, {-1, 2}};
+      int[][] temp4 = new int[][] {{0, 0}, {-1, 0}, {1, 0}, {2, 0}};
+      this.versions = new int[][][]{temp1, temp2, temp3, temp4};
+      row = 2 - changeOfR; //starts at the top row
       col = 4; // middle of the board
     }
   }
