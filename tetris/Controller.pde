@@ -3,6 +3,7 @@ class Controller {
   static final int myRIGHT = 1;
   static final int myDOWN = 2;
   boolean [] inputs;
+  boolean movement;
 
   public Controller() {
     inputs = new boolean[3];
@@ -10,6 +11,9 @@ class Controller {
 
   boolean isPressed(int code) {
     return inputs[code];
+  }
+  boolean isMoving(){
+    return inputs[myLEFT] || inputs[myRIGHT];
   }
 
   void press(int code) {
@@ -30,7 +34,7 @@ class Controller {
       if(code == RIGHT)
         inputs[myRIGHT] = false;
       if(code == DOWN)
-      inputs[myDOWN] = false;
+        inputs[myDOWN] = false;
     }
   }
 }
