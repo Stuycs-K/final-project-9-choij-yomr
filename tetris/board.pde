@@ -7,7 +7,7 @@ public class Board{
   int[][][][] allPieces; //an array of every possible piece
   boolean swappedHold; // to make sure you can only swap once per piece
   int[] rands; // to keep in track the pieces that have came up
-  
+ 
   public Board(){
     grid = new int[22][10];
     for (int i = 0; i < grid.length; i++){
@@ -16,6 +16,7 @@ public class Board{
     colors = new color[]{ color(255,255,0), // yellow
                           
                         };
+                        
     linesCleared = 0;
     currentPiece = randomPiece(0);
     nextPiece = randomPiece(0);

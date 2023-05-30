@@ -6,13 +6,13 @@ public class MyPiece {
   color pieceColor; // the color of the piece
 
 
-  public MyPiece(String piece) {
-    whichPiece(piece);
+  public MyPiece(String piece, int changeOfR) {
+    whichPiece(piece, changeOfR);
     currentVersion = 1;
     fallCounter = 0;
   }
 
-  public void whichPiece(String piece) {
+  public void whichPiece(String piece, int changeOfR) {
     // assigns the version var and color var depending on the string
     // also assigns the starting row and col depending on the string
 
@@ -23,7 +23,7 @@ public class MyPiece {
       int[][] temp3 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
       int[][] temp4 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
       versions = new int[][][]{temp1, temp2, temp3, temp4};
-      row = 0; //starts at the top row
+      row = 3 - changeOfR; //starts at the top row
       col = 4; // middle of the board
     }
   }
@@ -42,6 +42,14 @@ public class MyPiece {
 
   public color getColor() {
     return pieceColor;
+  }
+  
+  public void setR(int i){
+    row+=i;
+  }
+  
+  public int[][] currentVersion(){
+    return versions[currentVersion];
   }
 
   public void rotatePiece(int[][] grid, boolean direction) {
@@ -124,11 +132,17 @@ public class MyPiece {
       square(x + changeR * 30, x + changeC * 30, 30);
     }
   }
-
-  public boolean isValid(int[][] grid, int version) {
+  
+  public boolean isValid(int[][] grid) {
     // returns true if the position of the currentPiece is valid
     // position uses the verison argument, not the currentVersion
     return isValid(grid, currentVersion, 0 ,0);
+  }
+  
+  public boolean isValid(int[][] grid, int version) {
+    // returns true if the position of the currentPiece is valid
+    // position uses the verison argument, not the currentVersion
+    return isValid(grid, version, 0 ,0);
   }
 
   public boolean isValid(int[][] grid, int changeR, int changeC) {
