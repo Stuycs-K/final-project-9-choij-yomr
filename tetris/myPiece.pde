@@ -7,17 +7,13 @@ public class MyPiece {
 
 
   public MyPiece(String piece, int changeOfR) {
-    whichPiece(piece, changeOfR);
     currentVersion = 0;
     fallCounter = 1;
-  }
-
-  public void whichPiece(String piece, int changeOfR) {
+  
     // assigns the version var and color var depending on the string
     // also assigns the starting row and col depending on the string
-
     if (piece.equals("square")) { //square shape
-      pieceColor = color(255, 255, 0); //yellow
+      pieceColor = color(255,255,0); //yellow
       int[][] temp1 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
       int[][] temp2 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
       int[][] temp3 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
@@ -26,15 +22,61 @@ public class MyPiece {
       row = 3 - changeOfR; //starts at the top row
       col = 4; // middle of the board
     } else if (piece.equals("line")){ // line shape
-      pieceColor = color(0, 255, 255); // blue
+      pieceColor = color(0,255,255); // cyan
       int[][] temp1 = new int[][] {{0, 0}, {0, -1}, {0, 1}, {0, 2}};
       int[][] temp2 = new int[][] {{0, 1}, {-1, 1}, {1, 1}, {2, 1}};
       int[][] temp3 = new int[][] {{-1, 0}, {-1, -1}, {-1, 1}, {-1, 2}};
       int[][] temp4 = new int[][] {{0, 0}, {-1, 0}, {1, 0}, {2, 0}};
-      this.versions = new int[][][]{temp1, temp2, temp3, temp4};
+      versions = new int[][][]{temp1, temp2, temp3, temp4};
       row = 2 - changeOfR; //starts at the top row
       col = 4; // middle of the board
+    } else if (piece.equals("blueL")){ // 
+      pieceColor = color(0,0,255); // blue
+      int[][] temp1 = new int[][] {{0, 0}, {0, 1}, {0, -1}, {-1, -1}};
+      int[][] temp2 = new int[][] {{0, 0}, {-1, 0}, {1, 0}, {-1, 1}};
+      int[][] temp3 = new int[][] {{0, 0}, {0, 1}, {0, -1}, {1, 1}};
+      int[][] temp4 = new int[][] {{0, 0}, {-1, 0}, {1, 0}, {1, -1}};
+      versions = new int[][][]{temp1, temp2, temp3, temp4};
+      row = 3 - changeOfR; //starts at the top row
+      col = 4; // middle of the board
+    } else if (piece.equals("orangeL")){ // 
+      pieceColor =  color(255, 165, 0); // orange
+      int[][] temp1 = new int[][] {{0, 0}, {0, 1}, {0, -1}, {-1, 1}};
+      int[][] temp2 = new int[][] {{0, 0}, {-1, 0}, {1, 0}, {1, 1}};
+      int[][] temp3 = new int[][] {{0, 0}, {0, 1}, {0, -1}, {1, -1}};
+      int[][] temp4 = new int[][] {{0, 0}, {-1, 0}, {1, 0}, {-1, -1}};
+      versions = new int[][][]{temp1, temp2, temp3, temp4};
+      row = 3 - changeOfR; //starts at the top row
+      col = 4; // middle of the board
+    } else if (piece.equals("greenSnake")){ // 
+      pieceColor =  color(22,100,8); // green
+      int[][] temp1 = new int[][] {{0, 0}, {0, -1}, {-1, 0}, {-1, 1}};
+      int[][] temp2 = new int[][] {{0, 0}, {0, 1}, {-1, 0}, {1, 1}};
+      int[][] temp3 = new int[][] {{0, 0}, {0, 1}, {1, 0}, {1, -1}};
+      int[][] temp4 = new int[][] {{0, 0}, {0, -1}, {-1, -1}, {1, 0}};
+      versions = new int[][][]{temp1, temp2, temp3, temp4};
+      row = 3 - changeOfR; //starts at the top row
+      col = 4; // middle of the board
+    } else if (piece.equals("redSnake")){ // 
+      pieceColor =  color(255, 0, 0); // green
+      int[][] temp1 = new int[][] {{0, 0}, {-1, 0}, {0, 1}, {-1, -1}};
+      int[][] temp2 = new int[][] {{0, 0}, {0, 1}, {1, 0}, {-1, 1}};
+      int[][] temp3 = new int[][] {{0, 0}, {0, -1}, {1, 0}, {1, 1}};
+      int[][] temp4 = new int[][] {{0, 0}, {0, -1}, {1, -1}, {-1, 0}};
+      versions = new int[][][]{temp1, temp2, temp3, temp4};
+      row = 3 - changeOfR; //starts at the top row
+      col = 4; // middle of the board
+    } else { // WHEN STRING IS tShape, java forces me to do else here
+      pieceColor =  color(138, 43, 226); // purple
+      int[][] temp1 = new int[][] {{0, 0}, {0, -1}, {-1, 0}, {0, 1}};
+      int[][] temp2 = new int[][] {{0, 0}, {0, 1}, {-1, 0}, {1, 0}};
+      int[][] temp3 = new int[][] {{0, 0}, {0, 1}, {1, 0}, {0, -1}};
+      int[][] temp4 = new int[][] {{0, 0}, {0, -1}, {-1, 0}, {1, 0}};
+      versions = new int[][][]{temp1, temp2, temp3, temp4};
+      row = 3 - changeOfR; // starts at the top row
+      col = 4; // middle of the board
     }
+   
   }
 
   public int getCounter() {
@@ -149,7 +191,6 @@ public class MyPiece {
     // returns true if the position of the currentPiece is valid
     // position uses the verison argument, not the currentVersion
     // position changed by changeR and changeC
-
     for (int i = 0; i < versions[version].length; i++) {
       // getting the row and col of the theoretical square
       int tempRow = versions[version][i][0] + changeR + row; 
