@@ -165,7 +165,7 @@ public class MyPiece {
       // getting the row and col coord from every square of the currentVersion
       int changeR = versions[v][i][0];
       int changeC = versions[v][i][1];
-      square(x + changeR * 30, y + changeC * 30, 30);
+      square(x + changeC * 25, y + changeR * 25, 25);
     }
   }
   

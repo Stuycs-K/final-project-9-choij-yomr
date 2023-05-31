@@ -8,12 +8,14 @@ public class Board {
   boolean swappedHold; // to make sure you can only swap once per piece
   String[] pieceTypes; // the possible shapes
   int[] rands; // to keep in track the pieces that have came up
+  boolean end; // true if game is done, false if game is still going
 
   public Board() {
     grid = new int[22][10];
     for (int i = 0; i < grid.length; i++) {
       Arrays.fill(grid[i], -1);
     }
+    end = false;
     pieceTypes = new String[]{"square", "line", "blueL", "orangeL", "greenSnake", "redSnake", "tShape"};
     rands = new int[7];
     colors = new color[]{ color(255, 255, 0), // yellow
@@ -32,6 +34,10 @@ public class Board {
 
   public MyPiece getCurrentPiece() {
     return currentPiece;
+  }
+  
+  public boolean getEnd(){
+    return end;
   }
 
   public MyPiece randomPiece(int changeOfR) {
@@ -116,7 +122,7 @@ public class Board {
       temp.setR(-1); // if not, tries to spawn the piece two row up
     }
     if (!temp.isValid(grid)) {
-      endGame();
+      end = true;
     }
     return temp;
   }
@@ -180,8 +186,30 @@ public class Board {
     // prints the board, calls printPiece
 
     // printing the nextPiece
+    fill(255);
+    rect(x + 340, y + 20, 120, 100);
+    textSize(13);
+    fill(0);
+    text("next:", x + 353, y + 42);
+    nextPiece.pieceDisplay(x + 375, y + 75, 0);
 
     // printing the holdPiece
+    fill(255);
+    rect(x + 340, y + 140, 120, 100);
+    textSize(13);
+    fill(0);
+    text("hold:", x + 353, y + 162);
+    if (holdPiece != null){
+      holdPiece.pieceDisplay(x + 375, y + 195, 0);
+    }
+    
+    // printing the linesCleared
+    fill(255);
+    rect(x + 340, y + 260, 120, 50);
+    textSize(13);
+    fill(0);
+    text("lines cleared:", x + 360, y + 280);
+    text(linesCleared, x + 360, y + 300);
 
     // printing the grid
     for (int r = 0; r < grid.length; r++) {
@@ -219,7 +247,4 @@ public class Board {
   }
 
 
-
-  public void endGame() {
-  }
 }

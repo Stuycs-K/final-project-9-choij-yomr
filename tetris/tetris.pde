@@ -8,7 +8,7 @@ void setup(){
   board = new Board();
   keyboardInput = new Controller();
   moveCounter = 0;
-  fallCd = 30;
+  fallCd = 40;
   moveCd = 8;
   rotateCounter = 0;
   rotateCd = 20;
@@ -33,7 +33,7 @@ void draw() {
   if (keyboardInput.isPressed(Controller.myDOWN)){
     fallCd = 5;
   } else {
-    fallCd = 30;
+    fallCd = 40;
   }
   if (keyboardInput.isRotating()){
     if (rotateCounter % rotateCd == 0){
