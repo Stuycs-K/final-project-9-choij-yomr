@@ -1,15 +1,22 @@
 static String MODE = "menu";
 boolean buttonClicked = false;
 PImage titleImage;
+PImage instructionsImage;
+PFont mono;
+boolean showReturnButton = false;
 
 void setup() {
   size(600, 800);
     
+  mono = createFont("tetrisFont.ttf", 18);
+  textFont(mono);
   textAlign(CENTER, CENTER); // center text alignment
   textSize(40); // text size
   
   titleImage = loadImage("tetrisTitle.jpg");
- 
+  instructionsImage = loadImage("instructions.png");
+
+  
 }
 
 void draw() {
@@ -18,7 +25,7 @@ void draw() {
   // title image
   titleImage.resize(0,200);
   image(titleImage, 0, 50);
-  
+
   // vertical positions for buttons
   int buttonSpacing = 80;
   int buttonY = 300;
@@ -70,5 +77,26 @@ void draw() {
   else if (!mousePressed) {
     buttonClicked = false;
   }
-}
+  
+  // go to instructions page
+  if (MODE.equals("instructions")){
+    instructionsImage.resize(2000,2000);
+    image(instructionsImage, 0, 0, width, height); 
+    // return button
+    if (showReturnButton) {
+      fill(0, 255, 0); // green color
+      rect(width - 120, height - 80, 100, 50, 10); // return button
+      fill(0); // black text color
+      text("Return", width - 70, height - 55); // return button label
+      
+      // check if the return button is clicked
+      if (mousePressed && mouseX > width - 120 && mouseX < width - 20 && mouseY > height - 80 && mouseY < height - 30) {
+        println("Return button clicked.");
+        MODE = "menu"; // return to the menu page
+        showReturnButton = false; // hide the return button
+      }
+    }
+  }
+  
+  
 }
