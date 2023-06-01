@@ -21,6 +21,10 @@ working on making those functions work and developing our worklog + readme
 
 finished README.md for the most part (adding the instructions image + fixing line breaks)
 
+### 5/26
+
+started working on the menu for TETRIS
+
 ## Joshua Choi
 
 ### 5/22
@@ -39,3 +43,9 @@ still working on the skeleton for all classes + actually
 working on making those functions work  
 
 ### 5/25
+
+did more methods for myPiece.pde and board.pde
+
+### 5/26
+
+worked on more methods for myPiece.pde
