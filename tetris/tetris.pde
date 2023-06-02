@@ -1,6 +1,7 @@
 Board board;
 Controller keyboardInput;
 int fallCd, moveCd, moveCounter, rotateCd, rotateCounter;
+boolean paused;
 
 
 void setup(){
@@ -16,7 +17,7 @@ void setup(){
 
 void draw() {
   background(192);
-  board.printBoard(100,50);
+  board.printBoard(100,80);
   if (keyboardInput.isMoving()){
     if (moveCounter % moveCd == 0){
       if (keyboardInput.isPressed(Controller.myLEFT)) {
@@ -66,6 +67,21 @@ void keyPressed(){
   }
   if (key == ' '){ // this is here because it is a one time thing, releasing space does nothing
     board.fallDownAll(); // no need for true and false in controller
+  }
+  if (key == 'c'){ // one time thing
+    board.swapHold(); // boolean already in board preventing holding
+  }
+  if (key == 'p') {
+    if (paused){
+      loop();
+      paused = false;
+    } else{
+      noLoop();
+      paused = true;
+      textSize(20);
+      fill(0);
+      text("PAUSED", width/2 - 32, 50);
+    }
   }
 }
 

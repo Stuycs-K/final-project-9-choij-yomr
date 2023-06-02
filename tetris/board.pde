@@ -5,10 +5,11 @@ public class Board {
   color[] colors; //converts number in grid to a color
   int linesCleared; //number of lines cleared
   int[][][][] allPieces; //an array of every possible piece
-  boolean swappedHold; // to make sure you can only swap once per piece
   String[] pieceTypes; // the possible shapes
   int[] rands; // to keep in track the pieces that have came up
+  boolean swapped; // to make sure that the player can only swap once 
   boolean end; // true if game is done, false if game is still going
+  
 
   public Board() {
     grid = new int[22][10];
@@ -16,6 +17,7 @@ public class Board {
       Arrays.fill(grid[i], -1);
     }
     end = false;
+    swapped = false;
     pieceTypes = new String[]{"square", "line", "blueL", "orangeL", "greenSnake", "redSnake", "tShape"};
     rands = new int[7];
     colors = new color[]{ color(255, 255, 0), // yellow
@@ -72,13 +74,25 @@ public class Board {
 
   public void swapHold() {
     // swaps the holdPiece and the currentPiece
-
-    // I think easiest way to do this is make holdPiece a new instance of myPiece
-    // (same shape as currentPiece ofc)in order to reset the position of the piece
-
-    // case 1: holdPiece is null
-
-    // case 2: holdPiece is not null
+    if (swapped) return; // if the player already swapped, then no swapping
+    
+    if (holdPiece == null){ // case 1: holdPiece is null
+      holdPiece = currentPiece;
+      holdPiece.resetPos(grid);
+      currentPiece = nextPiece;
+      nextPiece = spawnPiece();
+      swapped = true;
+    } else { // case 2: holdPiece is not null
+      MyPiece temp = currentPiece;
+      temp.resetPos(grid);
+      currentPiece = holdPiece;
+      holdPiece = temp;
+      swapped = true;
+      
+      
+    }
+    
+    
   }
 
   public void addPiece() {
@@ -109,6 +123,7 @@ public class Board {
       grid[r + rowChange][c + colChange] = num;
     }
     currentPiece = nextPiece;
+    swapped = false;
     nextPiece = spawnPiece();
   }
 
@@ -124,6 +139,7 @@ public class Board {
     if (!temp.isValid(grid)) {
       end = true;
     }
+    swapped = false;
     return temp;
   }
 
@@ -190,7 +206,7 @@ public class Board {
     rect(x + 340, y + 20, 120, 100);
     textSize(13);
     fill(0);
-    text("next:", x + 353, y + 42);
+    text("next:", x + 350, y + 42);
     nextPiece.pieceDisplay(x + 375, y + 75, 0);
 
     // printing the holdPiece
@@ -198,7 +214,7 @@ public class Board {
     rect(x + 340, y + 140, 120, 100);
     textSize(13);
     fill(0);
-    text("hold:", x + 353, y + 162);
+    text("hold:", x + 350, y + 162);
     if (holdPiece != null){
       holdPiece.pieceDisplay(x + 375, y + 195, 0);
     }
@@ -208,8 +224,8 @@ public class Board {
     rect(x + 340, y + 260, 120, 50);
     textSize(13);
     fill(0);
-    text("lines cleared:", x + 360, y + 280);
-    text(linesCleared, x + 360, y + 300);
+    text("lines cleared:", x + 350, y + 280);
+    text(linesCleared, x + 350, y + 300);
 
     // printing the grid
     for (int r = 0; r < grid.length; r++) {

@@ -4,15 +4,16 @@ public class MyPiece {
   int currentVersion; // defining index of versions int[][][]
   int fallCounter; // the counter for the passive falling of the piece
   color pieceColor; // the color of the piece
+  String pieceName; // name of the piece
 
 
   public MyPiece(String piece, int changeOfR) {
     currentVersion = 0;
     fallCounter = 1;
-  
+    pieceName = piece;
     // assigns the version var and color var depending on the string
     // also assigns the starting row and col depending on the string
-    if (piece.equals("square")) { //square shape
+    if (pieceName.equals("square")) { //square shape
       pieceColor = color(255,255,0); //yellow
       int[][] temp1 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
       int[][] temp2 = new int[][] {{0, 0}, {-1, 0}, {-1, 1}, {0, 1}};
@@ -21,7 +22,7 @@ public class MyPiece {
       versions = new int[][][]{temp1, temp2, temp3, temp4};
       row = 3 - changeOfR; //starts at the top row
       col = 4; // middle of the board
-    } else if (piece.equals("line")){ // line shape
+    } else if (pieceName.equals("line")){ // line shape
       pieceColor = color(0,255,255); // cyan
       int[][] temp1 = new int[][] {{0, 0}, {0, -1}, {0, 1}, {0, 2}};
       int[][] temp2 = new int[][] {{0, 1}, {-1, 1}, {1, 1}, {2, 1}};
@@ -30,7 +31,7 @@ public class MyPiece {
       versions = new int[][][]{temp1, temp2, temp3, temp4};
       row = 2 - changeOfR; //starts at the top row
       col = 4; // middle of the board
-    } else if (piece.equals("blueL")){ // 
+    } else if (pieceName.equals("blueL")){ // 
       pieceColor = color(0,0,255); // blue
       int[][] temp1 = new int[][] {{0, 0}, {0, 1}, {0, -1}, {-1, -1}};
       int[][] temp2 = new int[][] {{0, 0}, {-1, 0}, {1, 0}, {-1, 1}};
@@ -39,7 +40,7 @@ public class MyPiece {
       versions = new int[][][]{temp1, temp2, temp3, temp4};
       row = 3 - changeOfR; //starts at the top row
       col = 4; // middle of the board
-    } else if (piece.equals("orangeL")){ // 
+    } else if (pieceName.equals("orangeL")){ // 
       pieceColor =  color(255, 165, 0); // orange
       int[][] temp1 = new int[][] {{0, 0}, {0, 1}, {0, -1}, {-1, 1}};
       int[][] temp2 = new int[][] {{0, 0}, {-1, 0}, {1, 0}, {1, 1}};
@@ -48,7 +49,7 @@ public class MyPiece {
       versions = new int[][][]{temp1, temp2, temp3, temp4};
       row = 3 - changeOfR; //starts at the top row
       col = 4; // middle of the board
-    } else if (piece.equals("greenSnake")){ // 
+    } else if (pieceName.equals("greenSnake")){ // 
       pieceColor =  color(22,100,8); // green
       int[][] temp1 = new int[][] {{0, 0}, {0, -1}, {-1, 0}, {-1, 1}};
       int[][] temp2 = new int[][] {{0, 0}, {0, 1}, {-1, 0}, {1, 1}};
@@ -57,7 +58,7 @@ public class MyPiece {
       versions = new int[][][]{temp1, temp2, temp3, temp4};
       row = 3 - changeOfR; //starts at the top row
       col = 4; // middle of the board
-    } else if (piece.equals("redSnake")){ // 
+    } else if (pieceName.equals("redSnake")){ // 
       pieceColor =  color(255, 0, 0); // green
       int[][] temp1 = new int[][] {{0, 0}, {-1, 0}, {0, 1}, {-1, -1}};
       int[][] temp2 = new int[][] {{0, 0}, {0, 1}, {1, 0}, {-1, 1}};
@@ -66,7 +67,7 @@ public class MyPiece {
       versions = new int[][][]{temp1, temp2, temp3, temp4};
       row = 3 - changeOfR; //starts at the top row
       col = 4; // middle of the board
-    } else { // WHEN STRING IS tShape, java forces me to do else here
+    } else { // when pieceName is tShape, java forces me to do else here so no else if
       pieceColor =  color(138, 43, 226); // purple
       int[][] temp1 = new int[][] {{0, 0}, {0, -1}, {-1, 0}, {0, 1}};
       int[][] temp2 = new int[][] {{0, 0}, {0, 1}, {-1, 0}, {1, 0}};
@@ -78,6 +79,8 @@ public class MyPiece {
     }
    
   }
+  
+  
 
   public int getCounter() {
     return fallCounter;
@@ -110,9 +113,33 @@ public class MyPiece {
   public void resetCounter(){
     fallCounter = 1;
   }
+  
   public int[][] currentVersion(){
     return versions[currentVersion];
   }
+  
+  public boolean resetPos(int[][] grid){
+    // resets the piece to the orginal state
+    currentVersion = 0;
+    if (pieceName.equals("line")){
+      row = 2;
+      col = 4;
+    } else {
+      row = 3;
+      col = 4;
+    }
+    if (!isValid(grid)) { // check if the piece can be spawned
+      setR(-1); // if not, tries to spawn the piece one row up
+    }
+    if (!isValid(grid)) { // check if the piece can be spawned
+      setR(-1); // if not, tries to spawn the piece two row up
+    }
+    if (!isValid(grid)) {
+      return true;
+    }
+    return false;
+  }
+  
 
   public void rotatePiece(int[][] grid, boolean direction) {
     // changes rotation of piece
@@ -139,9 +166,6 @@ public class MyPiece {
     }
     
   }
-
-
-
 
   public void pieceDisplayInGrid(int x, int y) {
     // displays the piece, x and y is where the grid is, use
