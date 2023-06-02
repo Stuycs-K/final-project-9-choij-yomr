@@ -1,5 +1,4 @@
 String MODE = "menu";
-boolean endGame = false;
 boolean buttonClicked = false;
 PImage titleImage;
 PImage instructionsImage;
@@ -21,15 +20,6 @@ void setup() {
 
   titleImage = loadImage("tetrisTitle.jpg");
   instructionsImage = loadImage("instructions.png");
-
-
-  board = new Board();
-  keyboardInput = new Controller();
-  moveCounter = 0;
-  fallCd = 40;
-  moveCd = 8;
-  rotateCounter = 0;
-  rotateCd = 20;
 }
 
 void draw() {
@@ -68,6 +58,13 @@ void draw() {
       if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY && mouseY < buttonY + 50) {
         //println("Play button clicked.");
         MODE = "play";
+        board = new Board(0);
+        keyboardInput = new Controller();
+        moveCounter = 0;
+        fallCd = 40;
+        moveCd = 8;
+        rotateCounter = 0;
+        rotateCd = 20;
       } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + buttonSpacing && mouseY < buttonY + buttonSpacing + 50) {
         //println("Settings button clicked.");
         MODE = "settings";
@@ -77,25 +74,27 @@ void draw() {
       } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + 3 * buttonSpacing && mouseY < buttonY + 3 * buttonSpacing + 50) {
         //println("Setup button clicked.");
         MODE = "setup";
-      } else if (endGame == true){
-        MODE = "death";
       }
       buttonClicked = true;
     } else if (!mousePressed) {
       buttonClicked = false;
     }
-    
   }
-  
- 
- // go to game page
+
+
+  // go to game page
   if (MODE.equals("play")) {
+    
+    // if the game has ended
+    if (board.getEnd()){
+      MODE = "death";
+    }
 
     // background grey
     background(192);
 
     // print the board
-    board.printBoard(100, 80);
+    board.printBoard(100, 50);
 
     // checking for inputs for moving piece left and right
     if (keyboardInput.isMoving()) {
@@ -137,27 +136,26 @@ void draw() {
     for (int i = 0; i < 22; i++) {
       board.clearLine(i);
     }
-    
+
     returnButton();
-    
   }
-  
+
   // go to settings page
-  if (MODE.equals("settings")){
-    
+  if (MODE.equals("settings")) {
+
     returnButton();
   }
-  
+
   // go to instructions page
   if (MODE.equals("instructions")) {
     // these variables ensure the photo is the correct aspect ratio for our processing size(600,800)
     int newWidth = 600;
     int newHeight = (int) ((float) newWidth * instructionsImage.height / instructionsImage.width);
     image(instructionsImage, 0, 200, newWidth, newHeight);
-    
+
     returnButton();
   }
-  
+
   if (MODE.equals("setup")) {
     // buttons
     fill(48, 173, 206); // blue color
@@ -168,55 +166,79 @@ void draw() {
 
     fill(48, 173, 206); // blue color
     rect((width - 400) / 2, buttonY + 2 * buttonSpacing, 400, 50, 100);  // setup 3 button
-    
+
     // button labels
     fill(0); // black text color
     text("setup 1", width / 2, buttonY + 25); // setup 1 label
     text("setup 2", width / 2, buttonY + buttonSpacing + 25); // setup 2 label
     text("setup 3", width / 2, buttonY + 2 * buttonSpacing + 25); // setup 3 label
-    
+
     // check button press
     if (mousePressed && !buttonClicked) {
       // check if click falls within button
       if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY && mouseY < buttonY + 50) {
         //println("setup 1 clicked.");
-        MODE = "setup2";
+        MODE = "play";
+        board = new Board(1);
+        keyboardInput = new Controller();
+        moveCounter = 0;
+        fallCd = 40;
+        moveCd = 8;
+        rotateCounter = 0;
+        rotateCd = 20;
       } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + buttonSpacing && mouseY < buttonY + buttonSpacing + 50) {
         //println("setup 2 clicked.");
-        MODE = "setup2";
+        MODE = "play";
+        board = new Board(2);
+        keyboardInput = new Controller();
+        moveCounter = 0;
+        fallCd = 40;
+        moveCd = 8;
+        rotateCounter = 0;
+        rotateCd = 20;
       } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + 2 * buttonSpacing && mouseY < buttonY + 2 * buttonSpacing + 50) {
         //println("setup 3 clicked.");
-        MODE = "setup3";
+        MODE = "play";
+        board = new Board(3);
+        keyboardInput = new Controller();
+        moveCounter = 0;
+        fallCd = 40;
+        moveCd = 8;
+        rotateCounter = 0;
+        rotateCd = 20;
       }
+      buttonClicked = true;
+    } else if (!mousePressed) {
+      buttonClicked = false;
     }
-    
+
     returnButton();
   }
   
-  if (MODE.equals("death")){
+
+  if (MODE.equals("death")) {
     // Make the current screen transparent
     background(255, 255, 255, 100);
-    
+
     // Draw the death screen on top of the transparent background
     fill(255, 0, 0); // red color
     rect(width/2 - 200, height/2 - 100, 400, 200, 10); // death screen rectangle
-    
+
     fill(255); // white text color
     textSize(100);
     text("Game Over!", width/2, height/2 - 30); // death screen text
     returnButton();
   }
-  
 }
 
-void returnButton(){
+void returnButton() {
   fill(0, 255, 0); // green color
   textSize(30);
   if (MODE.equals("death")) {
     rect(width/2 - 50, height/2 + 35, 100, 50, 10); // return button in the middle of death screen rectangle
     fill(0); // black text color
     text("Return", width/2, height/2 + 55); // return button label
-    
+
     // check if the return button is clicked
     if (mousePressed && mouseX > width/2 - 50 && mouseX < width/2 + 50 && mouseY > height/2 + 35 && mouseY < height/2 + 70) {
       // println("Return button clicked.");
@@ -226,7 +248,7 @@ void returnButton(){
     rect(width - 120, height - 80, 100, 50, 10); // return button in the bottom right corner
     fill(0); // black text color
     text("Return", width - 70, height - 55); // return button label
-    
+
     // check if the return button is clicked
     if (mousePressed && mouseX > width - 120 && mouseX < width - 20 && mouseY > height - 80 && mouseY < height - 30) {
       // println("Return button clicked.");
@@ -260,7 +282,7 @@ void keyPressed() {
       paused = true;
       textSize(20);
       fill(0);
-      text("PAUSED", width/2 - 32, 50);
+      text("PAUSED", width/2, 50);
     }
   }
 }

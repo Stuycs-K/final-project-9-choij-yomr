@@ -6,7 +6,6 @@ public class MyPiece {
   color pieceColor; // the color of the piece
   String pieceName; // name of the piece
 
-
   public MyPiece(String piece, int changeOfR) {
     currentVersion = 0;
     fallCounter = 1;
@@ -131,9 +130,6 @@ public class MyPiece {
     if (!isValid(grid)) { // check if the piece can be spawned
       setR(-1); // if not, tries to spawn the piece one row up
     }
-    if (!isValid(grid)) { // check if the piece can be spawned
-      setR(-1); // if not, tries to spawn the piece two row up
-    }
     if (!isValid(grid)) {
       return true;
     }
@@ -161,10 +157,86 @@ public class MyPiece {
     if (isValid(grid, newVersion)) {
       currentVersion = newVersion;
     } else {
-      // NEED TO ADD WALL KICKS HERE LATER MAYBE PROBABLY I SHOULD DO THIS
-      // https://tetris.wiki/Super_Rotation_System
+      //WALL KICKS
+      int[][] wallKicks = getWallKicks(currentVersion, newVersion);
+      for (int i = 0; i < wallKicks.length; i++){
+        int changeC = wallKicks[i][0];
+        int changeR = wallKicks[i][1];
+        if (isValid(grid, newVersion, changeR, changeC)){
+          currentVersion = newVersion;
+          row += changeR;
+          col += changeC;
+          println("row: " + row);
+          println("col: " + col);
+          break;
+        }
+      }
+    }
+  }
+  
+  // getting the wall kicks
+  // https://tetris.wiki/Super_Rotation_System
+  // +1 is right, -1 is left 0,R,2,L
+  //                         0,1,2,3
+  // (x,-y) for translation
+  public int[][] getWallKicks(int oldVersion, int newVersion){
+    if (pieceName.equals("square")) return null; // no wall kicks for squares
+    
+    if (pieceName.equals("line")){ // wall kicks are different for lines bc they hate me
+      if (oldVersion == 0){
+        if (newVersion == 1){
+          return new int[][] {{-2, 0}, {1, 0}, {-2, 1}, {1, -2}};
+        } else if (newVersion == 3){
+          return new int[][] {{-1, 0}, {2, 0}, {-1, -2}, {2, 1}};
+        }
+      } else if (oldVersion == 1){
+        if (newVersion == 0){
+          return new int[][] {{2, 0}, {-1, 0}, {2, -1}, {-1, 2}};
+        } else if (newVersion == 2){
+          return new int[][] {{-1, 0}, {2, 0}, {-1, -2}, {2, 1}};
+        }
+      } else if (oldVersion == 2){
+        if (newVersion == 1){
+          return new int[][] {{-1, 0}, {-2, 0}, {1, 2}, {-2, -1}};
+        } else if (newVersion == 3){
+          return new int[][] {{2, 0}, {-1, 0}, {2, -1}, {-1, 2}};
+        }
+      } else if (oldVersion == 3){
+        if (newVersion == 2){
+          return new int[][] {{-2, 0}, {1, 0}, {-2, 1}, {1, -2}};
+        } else if (newVersion == 0){
+          return new int[][] {{1, 0}, {2, -0}, {1, 2}, {-2, 1}};
+        }
+      }
+    } else { // wall kicks for every other shape
+      if (oldVersion == 0){
+        if (newVersion == 1){
+          return new int[][] {{-1, 0}, {-1, -1}, {0, 2}, {-1, 2}};
+        } else if (newVersion == 3){
+          return new int[][] {{1, 0}, {1, -1}, {0, 2}, {-1, 2}};
+        }
+      } else if (oldVersion == 1){
+        if (newVersion == 0){
+          return new int[][] {{1, 0}, {1, 1}, {0, -2}, {1, -2}};
+        } else if (newVersion == 2){
+          return new int[][] {{1, 0}, {1, 1}, {0, -2}, {1, -2}};
+        }
+      } else if (oldVersion == 2){
+        if (newVersion == 1){
+          return new int[][] {{-1, 0}, {-1, -1}, {0, 2}, {-1, 2}};
+        } else if (newVersion == 3){
+          return new int[][] {{1, 0}, {1, -1}, {0, 2}, {1, 2}};
+        }
+      } else if (oldVersion == 3){
+        if (newVersion == 2){
+          return new int[][] {{-1, 0}, {-1, 1}, {0, -2}, {-1, -2}};
+        } else if (newVersion == 0){
+          return new int[][] {{1, 0}, {-1, 1}, {0, -2}, {-1, 2}};
+        }
+      }
     }
     
+    return null;
   }
 
   public void pieceDisplayInGrid(int x, int y) {
@@ -176,7 +248,9 @@ public class MyPiece {
       // getting the row and col coord from every square of the currentVersion
       int changeR = versions[currentVersion][i][0];
       int changeC = versions[currentVersion][i][1];
-      square(x + (col + changeC) * 30, y + (row + changeR) * 30, 30);
+      if (row + changeR > 1){
+        square(x + (col + changeC) * 30, y + (row + changeR) * 30, 30);
+      }
     }
   }
 

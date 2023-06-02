@@ -7,42 +7,122 @@ public class Board {
   int[][][][] allPieces; //an array of every possible piece
   String[] pieceTypes; // the possible shapes
   int[] rands; // to keep in track the pieces that have came up
-  boolean swapped; // to make sure that the player can only swap once 
+  int[] defaultRands; // the default rands
+  boolean swapped; // to make sure that the player can only swap once
   boolean end; // true if game is done, false if game is still going
-  
+  int setup; //setup number
 
-  public Board() {
+
+  public Board(int x) {
     grid = new int[22][10];
     for (int i = 0; i < grid.length; i++) {
       Arrays.fill(grid[i], -1);
+    }
+    setup = x;
+    
+    // different setups
+    if (setup == 1){
+      for (int i = 21; i > 12; i--){
+        for (int j = 0; j < 9; j++){
+          grid[i][j] = 7;
+        }
+      }
+    }
+    
+    if (setup == 2){
+      for (int i = 21; i > 19; i--){
+        for (int j = 0; j < 10; j++){
+          if (j != 6){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      for (int i = 19; i > 16; i--){
+        for (int j = 0; j < 10; j++){
+          if (j != 5 && j != 6){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      grid[17][6] = 7;
+      for (int i = 16; i > 14; i--){
+        for (int j = 0; j < 10; j++){
+          if (j != 5 && j != 6 && j != 7){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      grid[15][5] = 7;
+      for (int i = 14; i > 12; i--){
+        for (int j = 8; j < 10; j++){
+           grid[i][j] = 7;
+        }
+      }
+      
+    }
+    
+    if (setup == 3){
+      for (int i = 21; i > 19; i--){
+        for (int j = 0; j < 10; j++){
+          if (j != 4){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      for (int i = 19; i > 17; i--){
+        for (int j = 0; j < 10; j++){
+          if (j == 0 || j > 4){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      for (int j = 5; j < 10; j++){
+        grid[17][j] = 7;
+      }
+      for (int j = 3; j < 10; j++){
+        grid[16][j] = 7;
+        grid[15][j] = 7;
+      }
     }
     end = false;
     swapped = false;
     pieceTypes = new String[]{"square", "line", "blueL", "orangeL", "greenSnake", "redSnake", "tShape"};
     rands = new int[7];
+    defaultRands = new int[7];
     colors = new color[]{ color(255, 255, 0), // yellow
       color(0, 255, 255), // cyan
       color(0, 0, 255), // blue
       color(255, 165, 0), // orange
       color(22, 100, 8), // green
       color(255, 0, 0), // red
-      color(138, 43, 226) // purple
+      color(138, 43, 226), // purple
+      color(119,136,153) // darker weird grey
     };
 
     linesCleared = 0;
-    currentPiece = randomPiece(0);
-    nextPiece = randomPiece(0);
+    currentPiece = randomPiece();
+    nextPiece = randomPiece();
   }
+  
 
   public MyPiece getCurrentPiece() {
     return currentPiece;
   }
-  
-  public boolean getEnd(){
+
+  public boolean getEnd() {
     return end;
   }
-
-  public MyPiece randomPiece(int changeOfR) {
+  
+  
+  public MyPiece randomPiece() {
+    // randomPieces for setup
+    if (setup == 1 || setup == 3){
+      return new MyPiece("line", 0);
+    }
+    if (setup == 2){
+      return new MyPiece("tShape", 0);
+    }
+    
     // returns a randomPiece, following the tetris rules
     String pieceType = "";
 
@@ -64,19 +144,17 @@ public class Board {
           // if randomNum is within range, and rands tells us that the piece was not chosen before
           rands[i-1] = -1;
           pieceType = pieceTypes[i-1];
-          return new MyPiece(pieceType, changeOfR);
+          return new MyPiece(pieceType, 0);
         }
       }
     }
-    
-    
   }
 
   public void swapHold() {
     // swaps the holdPiece and the currentPiece
     if (swapped) return; // if the player already swapped, then no swapping
-    
-    if (holdPiece == null){ // case 1: holdPiece is null
+
+    if (holdPiece == null) { // case 1: holdPiece is null
       holdPiece = currentPiece;
       holdPiece.resetPos(grid);
       currentPiece = nextPiece;
@@ -88,11 +166,7 @@ public class Board {
       currentPiece = holdPiece;
       holdPiece = temp;
       swapped = true;
-      
-      
     }
-    
-    
   }
 
   public void addPiece() {
@@ -123,24 +197,14 @@ public class Board {
       grid[r + rowChange][c + colChange] = num;
     }
     currentPiece = nextPiece;
+    end = currentPiece.resetPos(grid);
     swapped = false;
     nextPiece = spawnPiece();
   }
 
   public MyPiece spawnPiece() {
     // returns where the nextPiece should spawn
-    MyPiece temp = randomPiece(0);
-    if (!temp.isValid(grid)) { // check if the piece can be spawned
-      temp.setR(-1); // if not, tries to spawn the piece one row up
-    }
-    if (!temp.isValid(grid)) { // check if the piece can be spawned
-      temp.setR(-1); // if not, tries to spawn the piece two row up
-    }
-    if (!temp.isValid(grid)) {
-      end = true;
-    }
-    swapped = false;
-    return temp;
+    return randomPiece();
   }
 
   public void movePiece(int i) {
@@ -201,32 +265,32 @@ public class Board {
   public void printBoard(int x, int y) {
     // prints the board, calls printPiece
     textSize(17);
-    
+
     // printing the nextPiece
     fill(255);
-    rect(x + 340, y + 20, 120, 100);
+    rect(x + 340, y + 60, 120, 100);
     fill(0);
-    text("next:", x + 400, y + 32);
-    nextPiece.pieceDisplay(x + 375, y + 75, 0);
+    text("next:", x + 400, y + 72);
+    nextPiece.pieceDisplay(x + 375, y + 115, 0);
 
     // printing the holdPiece
     fill(255);
-    rect(x + 340, y + 140, 120, 100);
+    rect(x + 340, y + 180, 120, 100);
     fill(0);
-    text("hold:", x + 400, y + 152);
-    if (holdPiece != null){
-      holdPiece.pieceDisplay(x + 375, y + 195, 0);
+    text("hold:", x + 400, y + 192);
+    if (holdPiece != null) {
+      holdPiece.pieceDisplay(x + 375, y + 235, 0);
     }
-    
+
     // printing the linesCleared
     fill(255);
-    rect(x + 340, y + 260, 120, 50);
+    rect(x + 340, y + 300, 120, 50);
     fill(0);
-    text("lines cleared:", x + 400, y + 272);
-    text(linesCleared, x + 400, y + 292);
+    text("lines cleared:", x + 400, y + 312);
+    text(linesCleared, x + 400, y + 333);
 
     // printing the grid
-    for (int r = 0; r < grid.length; r++) {
+    for (int r = 2; r < grid.length; r++) {
       for (int c = 0; c < grid[r].length; c++) {
         stroke(0);
         if (grid[r][c] == -1) {
@@ -243,7 +307,10 @@ public class Board {
 
 
     // printing the currentPiece
-    currentPiece.pieceDisplayInGrid(x, y);
+    
+    if (!end) {
+      currentPiece.pieceDisplayInGrid(x, y);
+    }
   }
 
   public void resetFallCounter() {
@@ -259,6 +326,4 @@ public class Board {
     }
     currentPiece.addCounter();
   }
-
-
 }
