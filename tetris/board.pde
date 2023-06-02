@@ -200,21 +200,20 @@ public class Board {
 
   public void printBoard(int x, int y) {
     // prints the board, calls printPiece
-
+    textSize(17);
+    
     // printing the nextPiece
     fill(255);
     rect(x + 340, y + 20, 120, 100);
-    textSize(13);
     fill(0);
-    text("next:", x + 350, y + 42);
+    text("next:", x + 400, y + 32);
     nextPiece.pieceDisplay(x + 375, y + 75, 0);
 
     // printing the holdPiece
     fill(255);
     rect(x + 340, y + 140, 120, 100);
-    textSize(13);
     fill(0);
-    text("hold:", x + 350, y + 162);
+    text("hold:", x + 400, y + 152);
     if (holdPiece != null){
       holdPiece.pieceDisplay(x + 375, y + 195, 0);
     }
@@ -222,10 +221,9 @@ public class Board {
     // printing the linesCleared
     fill(255);
     rect(x + 340, y + 260, 120, 50);
-    textSize(13);
     fill(0);
-    text("lines cleared:", x + 350, y + 280);
-    text(linesCleared, x + 350, y + 300);
+    text("lines cleared:", x + 400, y + 272);
+    text(linesCleared, x + 400, y + 292);
 
     // printing the grid
     for (int r = 0; r < grid.length; r++) {
