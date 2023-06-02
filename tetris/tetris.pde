@@ -259,6 +259,7 @@ void returnButton() {
 
 
 void keyPressed() {
+  if (!MODE.equals("play")) return;
   if (key == CODED) {
     keyboardInput.press(keyCode);
   } else {
@@ -288,6 +289,7 @@ void keyPressed() {
 }
 
 void keyReleased() {
+  if (!MODE.equals("play")) return;
   if (key == CODED) {
     // releasing down resets the fall counter to make the game more consistent
     if (keyCode == DOWN) {
