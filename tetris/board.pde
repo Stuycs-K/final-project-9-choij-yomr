@@ -207,7 +207,7 @@ public class Board {
     rect(x + 340, y + 300, 120, 50);
     fill(0);
     text("lines cleared:", x + 400, y + 312);
-    text(linesCleared, x + 400, y + 233);
+    text(linesCleared, x + 400, y + 333);
 
     // printing the grid
     for (int r = 2; r < grid.length; r++) {
