@@ -248,7 +248,9 @@ public class MyPiece {
       // getting the row and col coord from every square of the currentVersion
       int changeR = versions[currentVersion][i][0];
       int changeC = versions[currentVersion][i][1];
-      square(x + (col + changeC) * 30, y + (row + changeR) * 30, 30);
+      if (row + changeR > 1){
+        square(x + (col + changeC) * 30, y + (row + changeR) * 30, 30);
+      }
     }
   }
 

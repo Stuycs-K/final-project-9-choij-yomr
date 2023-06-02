@@ -188,29 +188,29 @@ public class Board {
 
     // printing the nextPiece
     fill(255);
-    rect(x + 340, y + 20, 120, 100);
+    rect(x + 340, y + 60, 120, 100);
     fill(0);
-    text("next:", x + 400, y + 32);
-    nextPiece.pieceDisplay(x + 375, y + 75, 0);
+    text("next:", x + 400, y + 72);
+    nextPiece.pieceDisplay(x + 375, y + 115, 0);
 
     // printing the holdPiece
     fill(255);
-    rect(x + 340, y + 140, 120, 100);
+    rect(x + 340, y + 180, 120, 100);
     fill(0);
-    text("hold:", x + 400, y + 152);
+    text("hold:", x + 400, y + 192);
     if (holdPiece != null) {
-      holdPiece.pieceDisplay(x + 375, y + 195, 0);
+      holdPiece.pieceDisplay(x + 375, y + 235, 0);
     }
 
     // printing the linesCleared
     fill(255);
-    rect(x + 340, y + 260, 120, 50);
+    rect(x + 340, y + 300, 120, 50);
     fill(0);
-    text("lines cleared:", x + 400, y + 272);
-    text(linesCleared, x + 400, y + 292);
+    text("lines cleared:", x + 400, y + 312);
+    text(linesCleared, x + 400, y + 233);
 
     // printing the grid
-    for (int r = 0; r < grid.length; r++) {
+    for (int r = 2; r < grid.length; r++) {
       for (int c = 0; c < grid[r].length; c++) {
         stroke(0);
         if (grid[r][c] == -1) {
