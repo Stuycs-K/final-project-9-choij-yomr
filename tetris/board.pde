@@ -88,11 +88,7 @@ public class Board {
       currentPiece = holdPiece;
       holdPiece = temp;
       swapped = true;
-      
-      
     }
-    
-    
   }
 
   public void addPiece() {
