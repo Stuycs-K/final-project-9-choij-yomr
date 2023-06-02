@@ -25,6 +25,38 @@ finished README.md for the most part (adding the instructions image + fixing lin
 
 started working on the menu for TETRIS
 
+### 5/27 
+
+worked on creating the title font and text design for tetris menu 
+
+### 5/28
+
+getting the dimensions for the menu right by testing various rectangles and 
+figuring out where I want all the buttons to be positioned 
+
+### 5/29
+
+tetris image created to be implemented into the processing menu 
+figured out positions for rectangles and made it more appealing 
+by using rounded edges
+
+### 5/30
+
+added image to menu, colored buttons 
+figuring out how to make clickable buttons 
+
+### 5/31
+
+font size change for menu, changing text size font 
+resizing images 
+
+### 6/1
+
+finished menu for the most part, implementing a return button 
+adding instructions page for menu
+clickable buttons 
+
+
 ## Joshua Choi
 
 ### 5/22
@@ -49,3 +81,32 @@ did more methods for myPiece.pde and board.pde
 ### 5/26
 
 worked on more methods for myPiece.pde
+
+### 5/27 
+
+functionality with slow fall and fallDown fast 
+2x2 square piece working w/ clear function 
+
+### 5/28
+
+death function working 
+
+### 5/29
+
+worked on getting the line piece implemented and figuring out delays between block spawning and being able
+to move the block 
+
+### 5/30
+
+continued working on myPiece and Board, adding a deathzone for blocks 
+block delay adjusted
+ 
+### 5/31
+
+continued worked on getting each tetris block implemented w/ proper rotations 
+fixed bugs with fall down function 
+
+### 6/1
+
+finished implementing functions to be ready for mvp 
+added functionality to play button 
