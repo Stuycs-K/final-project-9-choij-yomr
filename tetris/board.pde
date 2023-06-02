@@ -7,9 +7,9 @@ public class Board {
   int[][][][] allPieces; //an array of every possible piece
   String[] pieceTypes; // the possible shapes
   int[] rands; // to keep in track the pieces that have came up
-  boolean swapped; // to make sure that the player can only swap once 
+  boolean swapped; // to make sure that the player can only swap once
   boolean end; // true if game is done, false if game is still going
-  
+
 
   public Board() {
     grid = new int[22][10];
@@ -37,8 +37,8 @@ public class Board {
   public MyPiece getCurrentPiece() {
     return currentPiece;
   }
-  
-  public boolean getEnd(){
+
+  public boolean getEnd() {
     return end;
   }
 
@@ -68,15 +68,13 @@ public class Board {
         }
       }
     }
-    
-    
   }
 
   public void swapHold() {
     // swaps the holdPiece and the currentPiece
     if (swapped) return; // if the player already swapped, then no swapping
-    
-    if (holdPiece == null){ // case 1: holdPiece is null
+
+    if (holdPiece == null) { // case 1: holdPiece is null
       holdPiece = currentPiece;
       holdPiece.resetPos(grid);
       currentPiece = nextPiece;
@@ -119,24 +117,14 @@ public class Board {
       grid[r + rowChange][c + colChange] = num;
     }
     currentPiece = nextPiece;
+    end = currentPiece.resetPos(grid);
     swapped = false;
     nextPiece = spawnPiece();
   }
 
   public MyPiece spawnPiece() {
     // returns where the nextPiece should spawn
-    MyPiece temp = randomPiece(0);
-    if (!temp.isValid(grid)) { // check if the piece can be spawned
-      temp.setR(-1); // if not, tries to spawn the piece one row up
-    }
-    if (!temp.isValid(grid)) { // check if the piece can be spawned
-      temp.setR(-1); // if not, tries to spawn the piece two row up
-    }
-    if (!temp.isValid(grid)) {
-      end = true;
-    }
-    swapped = false;
-    return temp;
+    return randomPiece(0);
   }
 
   public void movePiece(int i) {
@@ -197,7 +185,7 @@ public class Board {
   public void printBoard(int x, int y) {
     // prints the board, calls printPiece
     textSize(17);
-    
+
     // printing the nextPiece
     fill(255);
     rect(x + 340, y + 20, 120, 100);
@@ -210,10 +198,10 @@ public class Board {
     rect(x + 340, y + 140, 120, 100);
     fill(0);
     text("hold:", x + 400, y + 152);
-    if (holdPiece != null){
+    if (holdPiece != null) {
       holdPiece.pieceDisplay(x + 375, y + 195, 0);
     }
-    
+
     // printing the linesCleared
     fill(255);
     rect(x + 340, y + 260, 120, 50);
@@ -239,7 +227,10 @@ public class Board {
 
 
     // printing the currentPiece
-    currentPiece.pieceDisplayInGrid(x, y);
+    
+    if (!end) {
+      currentPiece.pieceDisplayInGrid(x, y);
+    }
   }
 
   public void resetFallCounter() {
@@ -255,6 +246,4 @@ public class Board {
     }
     currentPiece.addCounter();
   }
-
-
 }

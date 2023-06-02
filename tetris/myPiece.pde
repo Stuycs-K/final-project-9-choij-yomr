@@ -130,9 +130,6 @@ public class MyPiece {
     if (!isValid(grid)) { // check if the piece can be spawned
       setR(-1); // if not, tries to spawn the piece one row up
     }
-    if (!isValid(grid)) { // check if the piece can be spawned
-      setR(-1); // if not, tries to spawn the piece two row up
-    }
     if (!isValid(grid)) {
       return true;
     }
