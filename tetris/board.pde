@@ -7,32 +7,103 @@ public class Board {
   int[][][][] allPieces; //an array of every possible piece
   String[] pieceTypes; // the possible shapes
   int[] rands; // to keep in track the pieces that have came up
+  int[] defaultRands; // the default rands
   boolean swapped; // to make sure that the player can only swap once
   boolean end; // true if game is done, false if game is still going
+  int setup; //setup number
 
 
-  public Board() {
+  public Board(int x) {
     grid = new int[22][10];
     for (int i = 0; i < grid.length; i++) {
       Arrays.fill(grid[i], -1);
+    }
+    setup = x;
+    
+    // different setups
+    if (setup == 1){
+      for (int i = 21; i > 12; i--){
+        for (int j = 0; j < 9; j++){
+          grid[i][j] = 7;
+        }
+      }
+    }
+    
+    if (setup == 2){
+      for (int i = 21; i > 19; i--){
+        for (int j = 0; j < 10; j++){
+          if (j != 6){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      for (int i = 19; i > 16; i--){
+        for (int j = 0; j < 10; j++){
+          if (j != 5 && j != 6){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      grid[17][6] = 7;
+      for (int i = 16; i > 14; i--){
+        for (int j = 0; j < 10; j++){
+          if (j != 5 && j != 6 && j != 7){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      grid[15][5] = 7;
+      for (int i = 14; i > 12; i--){
+        for (int j = 8; j < 10; j++){
+           grid[i][j] = 7;
+        }
+      }
+      
+    }
+    
+    if (setup == 3){
+      for (int i = 21; i > 19; i--){
+        for (int j = 0; j < 10; j++){
+          if (j != 4){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      for (int i = 19; i > 17; i--){
+        for (int j = 0; j < 10; j++){
+          if (j == 0 || j > 4){
+             grid[i][j] = 7;
+          }
+        }
+      }
+      for (int j = 5; j < 10; j++){
+        grid[17][j] = 7;
+      }
+      for (int j = 3; j < 10; j++){
+        grid[16][j] = 7;
+        grid[15][j] = 7;
+      }
     }
     end = false;
     swapped = false;
     pieceTypes = new String[]{"square", "line", "blueL", "orangeL", "greenSnake", "redSnake", "tShape"};
     rands = new int[7];
+    defaultRands = new int[7];
     colors = new color[]{ color(255, 255, 0), // yellow
       color(0, 255, 255), // cyan
       color(0, 0, 255), // blue
       color(255, 165, 0), // orange
       color(22, 100, 8), // green
       color(255, 0, 0), // red
-      color(138, 43, 226) // purple
+      color(138, 43, 226), // purple
+      color(119,136,153) // darker weird grey
     };
 
     linesCleared = 0;
-    currentPiece = randomPiece(0);
-    nextPiece = randomPiece(0);
+    currentPiece = randomPiece();
+    nextPiece = randomPiece();
   }
+  
 
   public MyPiece getCurrentPiece() {
     return currentPiece;
@@ -41,8 +112,17 @@ public class Board {
   public boolean getEnd() {
     return end;
   }
-
-  public MyPiece randomPiece(int changeOfR) {
+  
+  
+  public MyPiece randomPiece() {
+    // randomPieces for setup
+    if (setup == 1 || setup == 3){
+      return new MyPiece("line", 0);
+    }
+    if (setup == 2){
+      return new MyPiece("tShape", 0);
+    }
+    
     // returns a randomPiece, following the tetris rules
     String pieceType = "";
 
@@ -64,7 +144,7 @@ public class Board {
           // if randomNum is within range, and rands tells us that the piece was not chosen before
           rands[i-1] = -1;
           pieceType = pieceTypes[i-1];
-          return new MyPiece(pieceType, changeOfR);
+          return new MyPiece(pieceType, 0);
         }
       }
     }
@@ -124,7 +204,7 @@ public class Board {
 
   public MyPiece spawnPiece() {
     // returns where the nextPiece should spawn
-    return randomPiece(0);
+    return randomPiece();
   }
 
   public void movePiece(int i) {

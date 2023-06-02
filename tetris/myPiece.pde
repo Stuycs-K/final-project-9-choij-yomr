@@ -203,9 +203,9 @@ public class MyPiece {
         }
       } else if (oldVersion == 3){
         if (newVersion == 2){
-          return new int[][] {{-2, 0}, {-2, 0}, {-2, 1}, {-2, -1}};
+          return new int[][] {{-2, 0}, {1, 0}, {-2, 1}, {1, -2}};
         } else if (newVersion == 0){
-          return new int[][] {{1, 0}, {2, -0}, {-1, -2}, {2, 1}};
+          return new int[][] {{1, 0}, {2, -0}, {1, 2}, {-2, 1}};
         }
       }
     } else { // wall kicks for every other shape
@@ -213,7 +213,7 @@ public class MyPiece {
         if (newVersion == 1){
           return new int[][] {{-1, 0}, {-1, -1}, {0, 2}, {-1, 2}};
         } else if (newVersion == 3){
-          return new int[][] {{1, 0}, {1, 1}, {0, 2}, {-1, 2}};
+          return new int[][] {{1, 0}, {1, -1}, {0, 2}, {-1, 2}};
         }
       } else if (oldVersion == 1){
         if (newVersion == 0){
@@ -231,7 +231,7 @@ public class MyPiece {
         if (newVersion == 2){
           return new int[][] {{-1, 0}, {-1, 1}, {0, -2}, {-1, -2}};
         } else if (newVersion == 0){
-          return new int[][] {{1, 0}, {1, -1}, {0, 2}, {1, -2}};
+          return new int[][] {{1, 0}, {-1, 1}, {0, -2}, {-1, 2}};
         }
       }
     }

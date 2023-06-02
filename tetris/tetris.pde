@@ -58,7 +58,7 @@ void draw() {
       if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY && mouseY < buttonY + 50) {
         //println("Play button clicked.");
         MODE = "play";
-        board = new Board();
+        board = new Board(0);
         keyboardInput = new Controller();
         moveCounter = 0;
         fallCd = 40;
@@ -178,18 +178,43 @@ void draw() {
       // check if click falls within button
       if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY && mouseY < buttonY + 50) {
         //println("setup 1 clicked.");
-        MODE = "setup2";
+        MODE = "play";
+        board = new Board(1);
+        keyboardInput = new Controller();
+        moveCounter = 0;
+        fallCd = 40;
+        moveCd = 8;
+        rotateCounter = 0;
+        rotateCd = 20;
       } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + buttonSpacing && mouseY < buttonY + buttonSpacing + 50) {
         //println("setup 2 clicked.");
-        MODE = "setup2";
+        MODE = "play";
+        board = new Board(2);
+        keyboardInput = new Controller();
+        moveCounter = 0;
+        fallCd = 40;
+        moveCd = 8;
+        rotateCounter = 0;
+        rotateCd = 20;
       } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + 2 * buttonSpacing && mouseY < buttonY + 2 * buttonSpacing + 50) {
         //println("setup 3 clicked.");
-        MODE = "setup3";
+        MODE = "play";
+        board = new Board(3);
+        keyboardInput = new Controller();
+        moveCounter = 0;
+        fallCd = 40;
+        moveCd = 8;
+        rotateCounter = 0;
+        rotateCd = 20;
       }
+      buttonClicked = true;
+    } else if (!mousePressed) {
+      buttonClicked = false;
     }
 
     returnButton();
   }
+  
 
   if (MODE.equals("death")) {
     // Make the current screen transparent
