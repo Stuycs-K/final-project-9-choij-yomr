@@ -55,7 +55,8 @@ resizing images
 finished menu for the most part, implementing a return button 
 adding instructions page for menu
 clickable buttons 
-
+added death screen + resized aspect ratio for instructions page 
+bug fixes
 
 ## Joshua Choi
 
@@ -89,7 +90,7 @@ functionality with slow fall and fallDown fast
 
 ### 5/28
 
-death function working 
+worked on fixing some bugs and worked on more methods
 
 ### 5/29
 
@@ -110,3 +111,6 @@ fixed bugs with fall down function
 
 finished implementing functions to be ready for mvp 
 added functionality to play button 
+added T-spins 
+added wallkicks for rotations at the edge of the board
+bug fixes 
