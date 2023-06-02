@@ -8,6 +8,8 @@ Board board;
 Controller keyboardInput;
 int fallCd, moveCd, moveCounter, rotateCd, rotateCounter;
 boolean paused = false;
+int buttonSpacing = 80;
+int buttonY = 300;
 
 void setup() {
   size(600, 800);
@@ -32,30 +34,25 @@ void setup() {
 
 void draw() {
   background(255); // white background
-
+  textSize(40); // text size
   if (MODE.equals("menu")) {
-    textSize(40); // text size
     // title image
     titleImage.resize(0, 200);
     image(titleImage, 0, 50);
 
-    // vertical positions for buttons
-    int buttonSpacing = 80;
-    int buttonY = 300;
-
     // menu buttons
     noStroke();
 
-    fill(255, 0, 0); // red color
+    fill(216, 103, 103); // red color
     rect((width - 400) / 2, buttonY, 400, 50, 100);  // play button
 
-    fill(255, 165, 0); // orange color
+    fill(144, 216, 103); // green color
     rect((width - 400) / 2, buttonY + buttonSpacing, 400, 50, 100);  // settings button
 
-    fill(255, 255, 0); // yellow color
+    fill(224, 148, 25); // orange color
     rect((width - 400) / 2, buttonY + 2 * buttonSpacing, 400, 50, 100);  // instructions button
 
-    fill(0, 255, 0); // green color
+    fill(149, 47, 234); // purple color
     rect((width - 400) / 2, buttonY + 3 * buttonSpacing, 400, 50, 100);  // setup button
 
     // button labels
@@ -90,17 +87,8 @@ void draw() {
     
   }
   
-  // go to instructions page
-  if (MODE.equals("instructions")) {
-    // these variables ensure the photo is the correct aspect ratio for our processing size(600,800)
-    int newWidth = 600;
-    int newHeight = (int) ((float) newWidth * instructionsImage.height / instructionsImage.width);
-    image(instructionsImage, 0, 200, newWidth, newHeight);
-    
-    returnButton();
-  }
-
-  // go to game page
+ 
+ // go to game page
   if (MODE.equals("play")) {
 
     // background grey
@@ -160,8 +148,48 @@ void draw() {
     returnButton();
   }
   
-  if (MODE.equals("setup")){
+  // go to instructions page
+  if (MODE.equals("instructions")) {
+    // these variables ensure the photo is the correct aspect ratio for our processing size(600,800)
+    int newWidth = 600;
+    int newHeight = (int) ((float) newWidth * instructionsImage.height / instructionsImage.width);
+    image(instructionsImage, 0, 200, newWidth, newHeight);
+    
+    returnButton();
+  }
+  
+  if (MODE.equals("setup")) {
+    // buttons
+    fill(48, 173, 206); // blue color
+    rect((width - 400) / 2, buttonY, 400, 50, 100);  // setup 1 button
 
+    fill(48, 173, 206); // blue color
+    rect((width - 400) / 2, buttonY + buttonSpacing, 400, 50, 100);  // setup 2 button
+
+    fill(48, 173, 206); // blue color
+    rect((width - 400) / 2, buttonY + 2 * buttonSpacing, 400, 50, 100);  // setup 3 button
+    
+    // button labels
+    fill(0); // black text color
+    text("setup 1", width / 2, buttonY + 25); // setup 1 label
+    text("setup 2", width / 2, buttonY + buttonSpacing + 25); // setup 2 label
+    text("setup 3", width / 2, buttonY + 2 * buttonSpacing + 25); // setup 3 label
+    
+    // check button press
+    if (mousePressed && !buttonClicked) {
+      // check if click falls within button
+      if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY && mouseY < buttonY + 50) {
+        //println("setup 1 clicked.");
+        MODE = "setup2";
+      } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + buttonSpacing && mouseY < buttonY + buttonSpacing + 50) {
+        //println("setup 2 clicked.");
+        MODE = "setup2";
+      } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + 2 * buttonSpacing && mouseY < buttonY + 2 * buttonSpacing + 50) {
+        //println("setup 3 clicked.");
+        MODE = "setup3";
+      }
+    }
+    
     returnButton();
   }
   
@@ -191,7 +219,7 @@ void returnButton(){
     
     // check if the return button is clicked
     if (mousePressed && mouseX > width/2 - 50 && mouseX < width/2 + 50 && mouseY > height/2 + 35 && mouseY < height/2 + 70) {
-      println("Return button clicked.");
+      // println("Return button clicked.");
       MODE = "menu"; // return to the menu page
     }
   } else {
@@ -201,7 +229,7 @@ void returnButton(){
     
     // check if the return button is clicked
     if (mousePressed && mouseX > width - 120 && mouseX < width - 20 && mouseY > height - 80 && mouseY < height - 30) {
-      println("Return button clicked.");
+      // println("Return button clicked.");
       MODE = "menu"; // return to the menu page
     }
   }
