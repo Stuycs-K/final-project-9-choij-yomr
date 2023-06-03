@@ -253,7 +253,32 @@ public class MyPiece {
       }
     }
   }
-
+  
+  public void ghostPieceDisplay(int x, int y, int[][] grid){
+    int r = 0;
+    while (true){ 
+      if (isValid(grid, r, 0)){
+         r++;
+      } else {
+        r--;
+        break;
+      }
+    }
+    for (int i = 0; i < versions[currentVersion].length; i++) {
+      fill(211, 211, 211);
+      // getting the row and col coord from every square of the currentVersion
+      int changeR = versions[currentVersion][i][0];
+      int changeC = versions[currentVersion][i][1];
+      if (row + changeR + r > 1){
+        square(x + (col + changeC) * 30, y + (row + changeR + r) * 30, 30);
+      }
+    }
+    
+    
+    
+     
+  }
+  
   public void pieceDisplay(int x, int y, int v) {
     // displays the piece at x and y directly, uses version v
     // used for displaying the piece in the hold and next piece squares
