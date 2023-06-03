@@ -260,8 +260,7 @@ public class Board {
     int[] temp = grid[row-1];
     grid[row] = temp;
   }
-
-
+  
   public void printBoard(int x, int y) {
     // prints the board, calls printPiece
     textSize(17);
@@ -309,7 +308,9 @@ public class Board {
     // printing the currentPiece
     
     if (!end) {
+      currentPiece.ghostPieceDisplay(x, y, grid);
       currentPiece.pieceDisplayInGrid(x, y);
+      
     }
   }
 

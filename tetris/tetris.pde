@@ -91,7 +91,7 @@ void draw() {
     }
 
     // background grey
-    background(192);
+    background(169);
 
     // print the board
     board.printBoard(100, 50);
