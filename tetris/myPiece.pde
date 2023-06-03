@@ -137,7 +137,10 @@ public class MyPiece {
   }
   
 
-  public void rotatePiece(int[][] grid, boolean direction) {
+  public boolean rotatePiece(int[][] grid, boolean direction) {
+    if (pieceName.equals("square")){ // no rotation for squares
+      return false;
+    } 
     // changes rotation of piece
     // if direction is true then it rotates right, if false then it rotates left
     // calls isValid(int[][] grid)
@@ -156,6 +159,7 @@ public class MyPiece {
     // checks if the rotation is vaild
     if (isValid(grid, newVersion)) {
       currentVersion = newVersion;
+      return true;
     } else {
       //WALL KICKS
       int[][] wallKicks = getWallKicks(currentVersion, newVersion);
@@ -166,12 +170,13 @@ public class MyPiece {
           currentVersion = newVersion;
           row += changeR;
           col += changeC;
-          println("row: " + row);
-          println("col: " + col);
-          break;
+          //println("row: " + row);
+          //println("col: " + col);
+          return true;
         }
       }
     }
+    return false;
   }
   
   // getting the wall kicks
