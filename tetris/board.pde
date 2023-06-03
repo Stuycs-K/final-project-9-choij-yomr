@@ -342,8 +342,7 @@ public class Board {
       rotated = false;
       addPieceCd = 40;
     }
-      
-    print(addPieceCd);
+     
     // when the piece reachs the bottom, a timer starts, piece only clicks once the timer ends
     // rotating the piece resets and increases the timer
     // hard falling still has a timer, but its decreased
