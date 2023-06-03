@@ -11,6 +11,10 @@ public class Board {
   boolean swapped; // to make sure that the player can only swap once
   boolean end; // true if game is done, false if game is still going
   int setup; //setup number
+  boolean pieceBottom; // boolean if piece is at the bottom
+  int addPieceCd; //add piece cooldown
+  boolean hardFall; // if the piece is hardFalling or not
+  boolean rotated;
 
 
   public Board(int x) {
@@ -19,73 +23,74 @@ public class Board {
       Arrays.fill(grid[i], -1);
     }
     setup = x;
-    
+
     // different setups
-    if (setup == 1){
-      for (int i = 21; i > 12; i--){
-        for (int j = 0; j < 9; j++){
+    if (setup == 1) {
+      for (int i = 21; i > 12; i--) {
+        for (int j = 0; j < 9; j++) {
           grid[i][j] = 7;
         }
       }
     }
-    
-    if (setup == 2){
-      for (int i = 21; i > 19; i--){
-        for (int j = 0; j < 10; j++){
-          if (j != 6){
-             grid[i][j] = 7;
+
+    if (setup == 2) {
+      for (int i = 21; i > 19; i--) {
+        for (int j = 0; j < 10; j++) {
+          if (j != 6) {
+            grid[i][j] = 7;
           }
         }
       }
-      for (int i = 19; i > 16; i--){
-        for (int j = 0; j < 10; j++){
-          if (j != 5 && j != 6){
-             grid[i][j] = 7;
+      for (int i = 19; i > 16; i--) {
+        for (int j = 0; j < 10; j++) {
+          if (j != 5 && j != 6) {
+            grid[i][j] = 7;
           }
         }
       }
       grid[17][6] = 7;
-      for (int i = 16; i > 14; i--){
-        for (int j = 0; j < 10; j++){
-          if (j != 5 && j != 6 && j != 7){
-             grid[i][j] = 7;
+      for (int i = 16; i > 14; i--) {
+        for (int j = 0; j < 10; j++) {
+          if (j != 5 && j != 6 && j != 7) {
+            grid[i][j] = 7;
           }
         }
       }
       grid[15][5] = 7;
-      for (int i = 14; i > 12; i--){
-        for (int j = 8; j < 10; j++){
-           grid[i][j] = 7;
+      for (int i = 14; i > 12; i--) {
+        for (int j = 8; j < 10; j++) {
+          grid[i][j] = 7;
         }
       }
-      
     }
-    
-    if (setup == 3){
-      for (int i = 21; i > 19; i--){
-        for (int j = 0; j < 10; j++){
-          if (j != 4){
-             grid[i][j] = 7;
+
+    if (setup == 3) {
+      for (int i = 21; i > 19; i--) {
+        for (int j = 0; j < 10; j++) {
+          if (j != 4) {
+            grid[i][j] = 7;
           }
         }
       }
-      for (int i = 19; i > 17; i--){
-        for (int j = 0; j < 10; j++){
-          if (j == 0 || j > 4){
-             grid[i][j] = 7;
+      for (int i = 19; i > 17; i--) {
+        for (int j = 0; j < 10; j++) {
+          if (j == 0 || j > 4) {
+            grid[i][j] = 7;
           }
         }
       }
-      for (int j = 5; j < 10; j++){
+      for (int j = 5; j < 10; j++) {
         grid[17][j] = 7;
       }
-      for (int j = 3; j < 10; j++){
+      for (int j = 3; j < 10; j++) {
         grid[16][j] = 7;
         grid[15][j] = 7;
       }
     }
     end = false;
     swapped = false;
+    pieceBottom = false;
+    rotated = false;
     pieceTypes = new String[]{"square", "line", "blueL", "orangeL", "greenSnake", "redSnake", "tShape"};
     rands = new int[7];
     defaultRands = new int[7];
@@ -96,14 +101,14 @@ public class Board {
       color(22, 100, 8), // green
       color(255, 0, 0), // red
       color(138, 43, 226), // purple
-      color(119,136,153) // darker weird grey
+      color(119, 136, 153) // darker weird grey
     };
-
+    addPieceCd = 15;
     linesCleared = 0;
     currentPiece = randomPiece();
     nextPiece = randomPiece();
   }
-  
+
 
   public MyPiece getCurrentPiece() {
     return currentPiece;
@@ -112,17 +117,17 @@ public class Board {
   public boolean getEnd() {
     return end;
   }
-  
-  
+
+
   public MyPiece randomPiece() {
     // randomPieces for setup
-    if (setup == 1 || setup == 3){
+    if (setup == 1 || setup == 3) {
       return new MyPiece("line", 0);
     }
-    if (setup == 2){
+    if (setup == 2) {
       return new MyPiece("tShape", 0);
     }
-    
+
     // returns a randomPiece, following the tetris rules
     String pieceType = "";
 
@@ -222,20 +227,23 @@ public class Board {
     }
     return false;
   }
+  
+  public boolean tryFallDownOne(){
+    return currentPiece.isValid(grid, 1, 0);
+  }
 
   public void fallDownAll() {
-    // just calls fallDownOne until the block cannot fall down
-    while (fallDownOne()) {
-    }
-    addPiece();
+    while (fallDownOne());
+    hardFall = true;
+    addPieceCd = 8;
   }
 
   public void rotateLeft() {
-    currentPiece.rotatePiece(grid, false);
+    rotated =  currentPiece.rotatePiece(grid, false);
   }
 
   public void rotateRight() {
-    currentPiece.rotatePiece(grid, true);
+    rotated = currentPiece.rotatePiece(grid, true);
   }
 
   public void clearLine(int row) {
@@ -260,7 +268,7 @@ public class Board {
     int[] temp = grid[row-1];
     grid[row] = temp;
   }
-  
+
   public void printBoard(int x, int y) {
     // prints the board, calls printPiece
     textSize(17);
@@ -306,11 +314,10 @@ public class Board {
 
 
     // printing the currentPiece
-    
+
     if (!end) {
       currentPiece.ghostPieceDisplay(x, y, grid);
       currentPiece.pieceDisplayInGrid(x, y);
-      
     }
   }
 
@@ -321,8 +328,33 @@ public class Board {
   public void fallTick(int cd) {
     // one tick of the falling down and board things (line clears)
     if (currentPiece.getCounter() % cd == 0) { // falling is not every tick
-      if (!fallDownOne()) { // if the block cannot fall down
+      fallDownOne(); // fall down one
+    }
+    
+    
+    pieceBottom = !tryFallDownOne();
+    
+    if (hardFall && !pieceBottom){ // if hardFalling and the piece isn't at the bottom
+      fallDownAll(); // fallDown
+    }
+    
+    if (rotated){
+      rotated = false;
+      addPieceCd = 40;
+    }
+      
+    print(addPieceCd);
+    // when the piece reachs the bottom, a timer starts, piece only clicks once the timer ends
+    // rotating the piece resets and increases the timer
+    // hard falling still has a timer, but its decreased
+    if (pieceBottom) { 
+      if (addPieceCd == 0) {
+        addPieceCd = 15;
         addPiece();
+        hardFall = false;
+        pieceBottom = false;
+      } else {
+        addPieceCd -=1;
       }
     }
     currentPiece.addCounter();
