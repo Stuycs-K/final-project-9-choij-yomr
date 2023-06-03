@@ -25,37 +25,37 @@ finished README.md for the most part (adding the instructions image + fixing lin
 
 started working on the menu for TETRIS
 
-### 5/27 
+### 5/27
 
-worked on creating the title font and text design for tetris menu 
+worked on creating the title font and text design for tetris menu
 
 ### 5/28
 
-getting the dimensions for the menu right by testing various rectangles and 
-figuring out where I want all the buttons to be positioned 
+getting the dimensions for the menu right by testing various rectangles and
+figuring out where I want all the buttons to be positioned
 
 ### 5/29
 
-tetris image created to be implemented into the processing menu 
-figured out positions for rectangles and made it more appealing 
+tetris image created to be implemented into the processing menu
+figured out positions for rectangles and made it more appealing
 by using rounded edges
 
 ### 5/30
 
-added image to menu, colored buttons 
-figuring out how to make clickable buttons 
+added image to menu, colored buttons
+figuring out how to make clickable buttons
 
 ### 5/31
 
-font size change for menu, changing text size font 
-resizing images 
+font size change for menu, changing text size font
+resizing images
 
 ### 6/1
 
-finished menu for the most part, implementing a return button 
+finished menu for the most part, implementing a return button
 adding instructions page for menu
-clickable buttons 
-added death screen + resized aspect ratio for instructions page 
+clickable buttons
+added death screen + resized aspect ratio for instructions page
 bug fixes
 
 ## Joshua Choi
@@ -83,10 +83,10 @@ did more methods for myPiece.pde and board.pde
 
 worked on more methods for myPiece.pde
 
-### 5/27 
+### 5/27
 
-functionality with slow fall and fallDown fast 
-2x2 square piece working w/ clear function 
+functionality with slow fall and fallDown fast
+2x2 square piece working w/ clear function
 
 ### 5/28
 
@@ -95,22 +95,27 @@ worked on fixing some bugs and worked on more methods
 ### 5/29
 
 worked on getting the line piece implemented and figuring out delays between block spawning and being able
-to move the block 
+to move the block
 
 ### 5/30
 
-continued working on myPiece and Board, adding a deathzone for blocks 
+continued working on myPiece and Board, adding a deathzone for blocks
 block delay adjusted
- 
+
 ### 5/31
 
-continued worked on getting each tetris block implemented w/ proper rotations 
-fixed bugs with fall down function 
+continued worked on getting each tetris block implemented w/ proper rotations
+fixed bugs with fall down function
 
 ### 6/1
 
-finished implementing functions to be ready for mvp 
-added functionality to play button 
-added T-spins 
+finished implementing functions to be ready for mvp
+added functionality to play button
 added wallkicks for rotations at the edge of the board
-bug fixes 
+added the setups
+bug fixes
+
+### 6/3
+ghost piece added
+timers on rotating/moving pieces when they are on the ground fixed to be consistent
+timers for hard fall and normal fall also made consistent
