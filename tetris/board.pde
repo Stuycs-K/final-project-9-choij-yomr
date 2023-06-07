@@ -235,7 +235,7 @@ public class Board {
   public void fallDownAll() {
     while (fallDownOne());
     hardFall = true;
-    addPieceCd = 8;
+    addPieceCd = 0;
   }
 
   public void rotateLeft() {
@@ -343,7 +343,7 @@ public class Board {
       addPieceCd = 40;
     }
       
-    print(addPieceCd);
+    //print(addPieceCd);
     // when the piece reachs the bottom, a timer starts, piece only clicks once the timer ends
     // rotating the piece resets and increases the timer
     // hard falling still has a timer, but its decreased
