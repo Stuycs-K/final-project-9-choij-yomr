@@ -17,8 +17,10 @@ public class Board {
   boolean rotated;
   boolean corrupted; // if the board is corrupted
   boolean cleared; 
+  SoundFile blockPlace;
+  SoundFile lineClear;
 
-  public Board(int x, boolean corrupted1, String difficulty) {
+  public Board(int x, boolean corrupted1, SoundFile blockPlace1, SoundFile lineClear1) {
     grid = new int[22][10];
     for (int i = 0; i < grid.length; i++) {
       Arrays.fill(grid[i], -1);
@@ -127,6 +129,8 @@ public class Board {
     linesCleared = 0;
     currentPiece = randomPiece();
     nextPiece = randomPiece();
+    blockPlace = blockPlace1;
+    lineClear = lineClear1;
   }
 
 
@@ -151,7 +155,9 @@ public class Board {
     boolean temp = true;
     for (int i = 0; i < grid.length; i++){
       for (int j = 0; j < grid[j].length; j++){
-        temp = grid[i][j] != 7;
+        if (grid[i][j] == 7){
+          temp = false;
+        }
       }
     }
     return corrupted && temp;
@@ -241,6 +247,7 @@ public class Board {
       grid[r + rowChange][c + colChange] = num;
     }
     currentPiece = nextPiece;
+    blockPlace.play();
     end = currentPiece.resetPos(grid);
     swapped = false;
     nextPiece = spawnPiece();
@@ -298,6 +305,7 @@ public class Board {
       for (int i = row; i > 0; i--) {
         switchLine(i);
       }
+      lineClear.play();
       cleared = true;
     }
     grid[0] = new int[]{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};

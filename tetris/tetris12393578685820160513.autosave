@@ -17,10 +17,7 @@ boolean isDraggingSFXSlider = false;
 boolean isButtonOn = false;
 import processing.sound.*;
 SoundFile soundtrack;
-SoundFile blockPlace; 
-SoundFile lineClear;
 Sound musicVol;
-Sound sfxVol;
 boolean isPlaying = false;
 int[] levels; //speed for each level
 int currentLevel; //the current level
@@ -39,15 +36,8 @@ void setup() {
   
   soundtrack = new SoundFile(this, "soundtrack.wav");
   musicVol = new Sound(this);
-  soundtrack.loop();
-  
-  blockPlace = new SoundFile(this, "blockPlace.wav");
-  lineClear = new SoundFile(this, "lineClear.wav");
-  sfxVol = new Sound(this);
-  
   setVolume(soundtrack, 0.5);
-  setVolume(blockPlace, 0.5);
-  setVolume(lineClear, 0.5);
+  soundtrack.loop();
   
   levels = new int[]{60, 50, 40, 35, 30, 25, 20, 16, 12, 10, 8, 6, 4};
 }
@@ -94,7 +84,7 @@ void draw() {
         //println("Play button clicked.");
         MODE = "play";
         difficultySetUp();
-        board = new Board(0, isButtonOn ,blockPlace, lineClear);
+        board = new Board(0, isButtonOn, difficulty);
         keyboardInput = new Controller();
         moveCounter = 0;
         fallCd = levels[currentLevel];
@@ -148,7 +138,8 @@ void draw() {
       }
       moveCounter++;
     }
-
+    
+    
     // checking for inputs for moving piece down
     if (keyboardInput.isPressed(Controller.myDOWN)) {
       fallCd = levels[currentLevel]/8 + 1;
@@ -173,7 +164,7 @@ void draw() {
     if (board.getLinesCleared() % scale == 0 && currentLevel < 12 && board.getCleared()){
       currentLevel++;
     }
-    
+
     // one tick of falling
     board.fallTick(fallCd);
 
@@ -241,10 +232,6 @@ void draw() {
     float sfxSliderWidth = sfxSliderX - 200;
     sfxSliderWidth = constrain(sfxSliderWidth, 0, 240); // clamp the width of the blue rectangle
     
-    float sfxVolume = sfxSliderWidth / 240.0;
-    setVolume(blockPlace, sfxVolume);
-    setVolume(lineClear, sfxVolume);
-    
     fill(48, 173, 206); // blue color
     rect(200, 225, sfxSliderWidth, 40, 20); // SFX volume slider
   
@@ -278,9 +265,9 @@ void draw() {
     fill(0); // black color
     textSize(35);
     textAlign(CENTER, CENTER);
-    text("Corruption:", 200, 580);
+    text("Corruption", 200, 580);
   
-    // button
+     // button
     if (isButtonOn) {
       fill(48, 173, 206); // blue color
     } else {
@@ -347,7 +334,7 @@ void draw() {
         //println("setup 1 clicked.");
         MODE = "play";
         difficultySetUp();
-        board = new Board(1, isButtonOn ,blockPlace, lineClear);
+        board = new Board(1, isButtonOn, difficulty);
         keyboardInput = new Controller();
         moveCounter = 0;
         fallCd = levels[currentLevel];
@@ -358,7 +345,7 @@ void draw() {
         //println("setup 2 clicked.");
         MODE = "play";
         difficultySetUp();
-        board = new Board(2, isButtonOn ,blockPlace, lineClear);
+        board = new Board(2, isButtonOn, difficulty);
         keyboardInput = new Controller();
         moveCounter = 0;
         fallCd = levels[currentLevel];
@@ -369,7 +356,7 @@ void draw() {
         //println("setup 3 clicked.");
         MODE = "play";
         difficultySetUp();
-        board = new Board(3, isButtonOn ,blockPlace, lineClear);
+        board = new Board(3, isButtonOn, difficulty);
         keyboardInput = new Controller();
         moveCounter = 0;
         fallCd = levels[currentLevel];
