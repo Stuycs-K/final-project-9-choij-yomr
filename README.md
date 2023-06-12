@@ -35,21 +35,21 @@ Please look at the diagram below to see what certain keys do!
 
 Briefly Explaning our Project:
 
-The play button allows the player to start the game.
-The setting button allows the player to change various settings including:
+The play button allows the player to start the game. \
+The setting button allows the player to change various settings including: \
 - music volume
 - sfx volume
-- difficulty 
+- difficulty \
     There are four modes of difficulty: easy, medium, hard, and insane. 
     Easy starts at level 1. Every 20 line clears, you advance a level. 
     Medium starts at level 3. Every 15 line clears, you advance a level. 
     Hard starts at level 3. Every 10 line clears, you advance a level. 
     Insane starts out at the hardest level.
-- game mode (corruption)
+- game mode (corruption) \
     The corruption gamemode has corrupted blocks already locked onto the board and you have to 
     clear these corrupted blocks to the bottom to win the game.
-The instructions button allows the player to view the controls to the game.
-The setups button allows the player to easily get to a scenario to test various functions:
+The instructions button allows the player to view the controls to the game. \
+The setups button allows the player to easily get to a scenario to test various functions: \
 - T-spins
 - Wall-kicks
 - Line clears
