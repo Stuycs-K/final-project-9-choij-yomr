@@ -15,15 +15,34 @@ public class Board {
   int addPieceCd; //add piece cooldown
   boolean hardFall; // if the piece is hardFalling or not
   boolean rotated;
+  boolean corrupted; // if the board is corrupted
+  boolean cleared; 
 
-
-  public Board(int x) {
+  public Board(int x, boolean corrupted1, String difficulty) {
     grid = new int[22][10];
     for (int i = 0; i < grid.length; i++) {
       Arrays.fill(grid[i], -1);
     }
     setup = x;
-
+    corrupted = corrupted1;
+    if (corrupted && x == 0){ // if normal game and corrupted
+       for (int i = 8; i < 15; i++){
+         for (int j = 0; j < 10; j++){
+           double rand = Math.random();
+           if (rand < 0.45){
+             grid[i][j] = 7;
+           }
+         }
+       }
+       for (int i = 15; i < 22; i++){
+         for (int j = 0; j < 10; j++){
+           double rand = Math.random();
+           if (rand < 0.55){
+             grid[i][j] = 7;
+           }
+         }
+       }
+    }
     // different setups
     if (setup == 1) {
       for (int i = 21; i > 12; i--) {
@@ -91,6 +110,7 @@ public class Board {
     swapped = false;
     pieceBottom = false;
     rotated = false;
+    cleared = false;
     pieceTypes = new String[]{"square", "line", "blueL", "orangeL", "greenSnake", "redSnake", "tShape"};
     rands = new int[7];
     defaultRands = new int[7];
@@ -113,9 +133,28 @@ public class Board {
   public MyPiece getCurrentPiece() {
     return currentPiece;
   }
-
+  
+  public boolean getCleared(){
+    boolean temp = cleared;
+    cleared = false;
+    return temp;
+  }
+  
+  public int getLinesCleared(){
+    return linesCleared;
+  }
   public boolean getEnd() {
     return end;
+  }
+  
+  public boolean getWin(){
+    boolean temp = true;
+    for (int i = 0; i < grid.length; i++){
+      for (int j = 0; j < grid[j].length; j++){
+        temp = grid[i][j] != 7;
+      }
+    }
+    return corrupted && temp;
   }
 
 
@@ -248,7 +287,6 @@ public class Board {
 
   public void clearLine(int row) {
     // tries to clear the line at int row
-    // returns true if the line is cleared, false if not
     int counter = 0;
     for (int i = 0; i < grid[row].length; i++) {
       if (grid[row][i] == -1) {
@@ -260,6 +298,7 @@ public class Board {
       for (int i = row; i > 0; i--) {
         switchLine(i);
       }
+      cleared = true;
     }
     grid[0] = new int[]{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
   }
