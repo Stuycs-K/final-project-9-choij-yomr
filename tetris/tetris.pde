@@ -17,7 +17,10 @@ boolean isDraggingSFXSlider = false;
 boolean isButtonOn = false;
 import processing.sound.*;
 SoundFile soundtrack;
+SoundFile blockPlace;
+SoundFile lineClear;
 Sound musicVol;
+Sound sfxVol;
 boolean isPlaying = false;
 
 void setup() {
@@ -33,8 +36,16 @@ void setup() {
   
   soundtrack = new SoundFile(this, "soundtrack.wav");
   musicVol = new Sound(this);
-  setVolume(soundtrack, 0.5);
+  setVolume(soundtrack, 0);
   soundtrack.loop();
+  
+  blockPlace = new SoundFile(this, "blockPlace.wav");
+  lineClear = new SoundFile(this, "lineClear.wav");
+  sfxVol = new Sound(this);
+  
+  setVolume(soundtrack, 0);
+  setVolume(blockPlace, 0);
+  setVolume(lineClear, 0);
 }
 
 void setVolume(SoundFile file, float Volume){
@@ -216,6 +227,10 @@ void draw() {
     float sfxSliderWidth = sfxSliderX - 200;
     sfxSliderWidth = constrain(sfxSliderWidth, 0, 240); // clamp the width of the blue rectangle
     
+    float sfxVolume = sfxSliderWidth / 240.0;
+    setVolume(blockPlace, sfxVolume);
+    setVolume(lineClear, sfxVolume);
+    
     fill(48, 173, 206); // blue color
     rect(200, 225, sfxSliderWidth, 40, 20); // SFX volume slider
   
@@ -251,7 +266,7 @@ void draw() {
     textAlign(CENTER, CENTER);
     text("Corruption", 200, 580);
   
-     // button
+    // button
     if (isButtonOn) {
       fill(48, 173, 206); // blue color
     } else {
