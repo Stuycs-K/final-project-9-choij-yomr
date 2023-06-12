@@ -9,6 +9,12 @@ int fallCd, moveCd, moveCounter, rotateCd, rotateCounter;
 boolean paused = false;
 int buttonSpacing = 80;
 int buttonY = 300;
+String difficulty = "normal";
+float musicSliderX = 200;
+float sfxSliderX = 200;
+boolean isDraggingMusicSlider = false;
+boolean isDraggingSFXSlider = false;
+boolean isButtonOn = false;
 
 void setup() {
   size(600, 800);
@@ -142,13 +148,117 @@ void draw() {
 
   // go to settings page
   if (MODE.equals("settings")) {
-
+    
+    // settings page
+    textSize(80);
+    textAlign(CENTER, CENTER);
+    text("Settings", width/2, 50);
+  
+    // music volume slider
+    fill(224, 148, 25); // orange color
+    rect(200, 150, 240, 40, 20); // music volume rectangle
+  
+    fill(0); // black color
+    textSize(20);
+    textAlign(LEFT, CENTER);
+    text("Music Volume:", 100, 165); // music volume label
+  
+    if (mousePressed && mouseX > 200 && mouseX < 440 + musicSliderX && mouseY > 150 && mouseY < 190) {
+      musicSliderX = constrain(mouseX, 200, 440 + musicSliderX);
+    }
+  
+    // calculate the width of the blue rectangle based on the slider position
+    float musicSliderWidth = musicSliderX - 200;
+    musicSliderWidth = constrain(musicSliderWidth, 0, 240); // clamp the width of the blue rectangle
+  
+    fill(48, 173, 206); // Blue color
+    rect(200, 150, musicSliderWidth, 40, 20); // music volume slider
+  
+    fill(0); // Black color
+    textAlign(CENTER, CENTER);
+    text(int(map(musicSliderWidth, 0, 240, 0, 100) + 0.5) + "%", 320, 165); // current music volume
+  
+    // SFX volume slider
+    fill(224, 148, 25); // orange color
+    rect(200, 225, 240, 40, 20); // SFX volume rectangle
+  
+    fill(0); // black color
+    textSize(20);
+    textAlign(LEFT, CENTER);
+    text("SFX Volume:", 100, 240); // SFX volume label
+  
+    if (mousePressed && mouseX > 200 && mouseX < 440 + sfxSliderX && mouseY > 225 && mouseY < 265) {
+      sfxSliderX = constrain(mouseX, 200, 440 + sfxSliderX);
+    }
+  
+    // calculate the width of the blue rectangle based on the slider position
+    float sfxSliderWidth = sfxSliderX - 200;
+    sfxSliderWidth = constrain(sfxSliderWidth, 0, 240); // clamp the width of the blue rectangle
+  
+    fill(48, 173, 206); // Blue color
+    rect(200, 225, sfxSliderWidth, 40, 20); // SFX volume slider
+  
+    fill(0); // Black color
+    textAlign(CENTER, CENTER);
+    text(int(map(sfxSliderWidth, 0, 240, 0, 100) + 0.5) + "%", 320, 240); // current SFX volume
+    
+    // Difficulty label
+    fill(0); // black color
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    text("Difficulty", 300, 325); // difficulty label
+    
+    // Difficulty buttons
+    drawDifficultyButton(80, 365, "Normal");
+    drawDifficultyButton(190, 365, "Medium");
+    drawDifficultyButton(300, 365, "Hard");
+    drawDifficultyButton(410, 365, "Insane");
+    
+    fill(0); // Black color
+    textAlign(CENTER, CENTER);
+    text(difficulty, width/2, 450); // display selected difficulty
+    
+    // gamemode label
+    fill(0); // black color
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    text("Game Mode", 300, 525); // game mode label
+    
+    // Corruption label
+    fill(0); // black color
+    textSize(35);
+    textAlign(CENTER, CENTER);
+    text("Corruption", 200, 580);
+  
+     // Button
+    if (isButtonOn) {
+      fill(48, 173, 206); // blue color
+    } else {
+      fill(224, 148, 25); // orange color
+    }
+    rect(350, 560, 100, 50, 20); // button rectangle
+  
+    fill(255); // White color
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    if (isButtonOn) {
+      text("ON", 400, 585); // button label when it's on
+    } else {
+      text("OFF", 400, 585); // button label when it's off
+    }
+    
+    
     returnButton();
   }
-
+  
   // go to instructions page
   if (MODE.equals("instructions")) {
     // these variables ensure the photo is the correct aspect ratio for our processing size(600,800)
+    
+    textSize(80);
+    textAlign(CENTER, CENTER);
+    text("Instructions", width/2, 50);
+    
     int newWidth = 600;
     int newHeight = (int) ((float) newWidth * instructionsImage.height / instructionsImage.width);
     image(instructionsImage, 0, 200, newWidth, newHeight);
@@ -157,6 +267,13 @@ void draw() {
   }
 
   if (MODE.equals("setup")) {
+    
+    textSize(80);
+    textAlign(CENTER, CENTER);
+    text("Setups", width/2, 50);
+    
+    textSize(40);
+    
     // buttons
     fill(48, 173, 206); // blue color
     rect((width - 400) / 2, buttonY, 400, 50, 100);  // setup 1 button
@@ -217,10 +334,10 @@ void draw() {
   
 
   if (MODE.equals("death")) {
-    // Make the current screen transparent
+    // make the current screen transparent
     background(255, 255, 255, 100);
 
-    // Draw the death screen on top of the transparent background
+    // draw the death screen on top of the transparent background
     fill(255, 0, 0); // red color
     rect(width/2 - 200, height/2 - 100, 400, 200, 10); // death screen rectangle
 
@@ -229,6 +346,21 @@ void draw() {
     text("Game Over!", width/2, height/2 - 30); // death screen text
     returnButton();
   }
+}
+
+void drawDifficultyButton(float x, float y, String label) {
+  if (difficulty.equals(label)) {
+    fill(48, 173, 206); // blue color
+  } else {
+    fill(224, 148, 25); // orange color
+  }
+  
+  rect(x, y, 100, 60, 20); // difficulty button
+  
+  fill(255); // White color
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  text(label, x + 50, y + 30); // difficulty button label
 }
 
 void returnButton() {
@@ -257,6 +389,48 @@ void returnButton() {
   }
 }
 
+void mousePressed() {
+  if (MODE.equals("main")) {
+    if (mouseX > 200 && mouseX < 400 && mouseY > 150 && mouseY < 190) {
+      MODE = "settings";
+    }
+  } else if (MODE.equals("settings")) {
+    if (mouseX > musicSliderX && mouseX < musicSliderX + 40 && mouseY > 150 && mouseY < 190) {
+      isDraggingMusicSlider = true;
+    } else if (mouseX > sfxSliderX && mouseX < sfxSliderX + 40 && mouseY > 250 && mouseY < 290) {
+      isDraggingSFXSlider = true;
+    } else if (mouseX > musicSliderX && mouseX < musicSliderX + 40 && mouseY > 150 && mouseY < 190) {
+      isDraggingMusicSlider = true;
+    } else if (mouseX > 200 && mouseX < 440 && mouseY > 150 && mouseY < 190) {
+      musicSliderX = constrain(mouseX, 200, 440 + musicSliderX);
+    } else if (mouseX > 200 && mouseX < 440 && mouseY > 250 && mouseY < 290) {
+      sfxSliderX = constrain(mouseX, 200, 440 + sfxSliderX);
+    } else if (mouseX > 80 && mouseX < 180 && mouseY > 365 && mouseY < 425) {
+      difficulty = "Normal";
+    } else if (mouseX > 190 && mouseX < 290 && mouseY > 365 && mouseY < 425) {
+      difficulty = "Medium";
+    } else if (mouseX > 300 && mouseX < 400 && mouseY > 365 && mouseY < 425) {
+      difficulty = "Hard";
+    } else if (mouseX > 410 && mouseX < 510 && mouseY > 365 && mouseY < 425) {
+      difficulty = "Insane";
+    } else if (mouseX > 350 && mouseX < 450 && mouseY > 560 && mouseY < 610) {
+      isButtonOn = !isButtonOn; // toggle state of the button when clicked
+    }
+  }
+}
+
+void mouseReleased() {
+  isDraggingMusicSlider = false;
+  isDraggingSFXSlider = false;
+}
+
+void mouseDragged() {
+  if (isDraggingMusicSlider) {
+    musicSliderX = constrain(mouseX, 200, 400);
+  } else if (isDraggingSFXSlider) {
+    sfxSliderX = constrain(mouseX, 200, 400);
+  }
+}
 
 void keyPressed() {
   if (!MODE.equals("play")) return;
