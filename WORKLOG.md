@@ -58,6 +58,14 @@ clickable buttons
 added death screen + resized aspect ratio for instructions page
 bug fixes
 
+### 6/12
+
+completed settings portion of the menu, which included implementing a 
+sound bar, music bar, difficulty, and game mode. I also implemented the 
+sound for the game, which included the music and sfx (block place and line clear)
+win screen for corruption mode
+fixed a lot of bugs
+
 ## Joshua Choi
 
 ### 5/22
@@ -116,6 +124,12 @@ added the setups
 bug fixes
 
 ### 6/3
+
 ghost piece added
 timers on rotating/moving pieces when they are on the ground fixed to be consistent
 timers for hard fall and normal fall also made consistent
+
+### 6/12
+
+implemented difficulty scaling, fixed a lot of bugs, implemented corruption game mode 
+helped implement sfx for sound
