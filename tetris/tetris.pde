@@ -9,7 +9,7 @@ int fallCd, moveCd, moveCounter, rotateCd, rotateCounter;
 boolean paused = false;
 int buttonSpacing = 80;
 int buttonY = 300;
-String difficulty = "normal";
+String difficulty = "Medium";
 float musicSliderX = 320;
 float sfxSliderX = 320;
 boolean isDraggingMusicSlider = false;
@@ -138,7 +138,8 @@ void draw() {
       }
       moveCounter++;
     }
-
+    
+    
     // checking for inputs for moving piece down
     if (keyboardInput.isPressed(Controller.myDOWN)) {
       fallCd = levels[currentLevel]/8 + 1;
@@ -245,7 +246,7 @@ void draw() {
     text("Difficulty", 300, 325); // difficulty label
     
     // difficulty buttons
-    drawDifficultyButton(80, 365, "Normal");
+    drawDifficultyButton(80, 365, "Easy");
     drawDifficultyButton(190, 365, "Medium");
     drawDifficultyButton(300, 365, "Hard");
     drawDifficultyButton(410, 365, "Insane");
@@ -405,7 +406,7 @@ void difficultySetUp(){
   if (difficulty.equals("Easy")){
     currentLevel = 0;
     scale = 20;
-  } else if (difficulty.equals("Normal")){
+  } else if (difficulty.equals("Medium")){
     currentLevel = 3;
     scale = 15;
   } else if (difficulty.equals("Hard")){
@@ -475,7 +476,7 @@ void mousePressed() {
     } else if (mouseX > 200 && mouseX < 440 && mouseY > 250 && mouseY < 290) {
       sfxSliderX = constrain(mouseX, 200, 440 + sfxSliderX);
     } else if (mouseX > 80 && mouseX < 180 && mouseY > 365 && mouseY < 425) {
-      difficulty = "Normal";
+      difficulty = "Easy";
     } else if (mouseX > 190 && mouseX < 290 && mouseY > 365 && mouseY < 425) {
       difficulty = "Medium";
     } else if (mouseX > 300 && mouseX < 400 && mouseY > 365 && mouseY < 425) {
