@@ -10,11 +10,15 @@ boolean paused = false;
 int buttonSpacing = 80;
 int buttonY = 300;
 String difficulty = "normal";
-float musicSliderX = 200;
-float sfxSliderX = 200;
+float musicSliderX = 320;
+float sfxSliderX = 320;
 boolean isDraggingMusicSlider = false;
 boolean isDraggingSFXSlider = false;
 boolean isButtonOn = false;
+import processing.sound.*;
+SoundFile soundtrack;
+Sound musicVol;
+boolean isPlaying = false;
 
 void setup() {
   size(600, 800);
@@ -26,11 +30,21 @@ void setup() {
 
   titleImage = loadImage("tetrisTitle.jpg");
   instructionsImage = loadImage("instructions.png");
+  
+  soundtrack = new SoundFile(this, "soundtrack.wav");
+  musicVol = new Sound(this);
+  setVolume(soundtrack, 0.5);
+  soundtrack.loop();
+}
+
+void setVolume(SoundFile file, float Volume){
+  file.amp(Volume);
 }
 
 void draw() {
   background(255); // white background
   textSize(40); // text size
+  
   if (MODE.equals("menu")) {
     // title image
     titleImage.resize(0, 200);
@@ -166,18 +180,25 @@ void draw() {
     if (mousePressed && mouseX > 200 && mouseX < 440 + musicSliderX && mouseY > 150 && mouseY < 190) {
       musicSliderX = constrain(mouseX, 200, 440 + musicSliderX);
     }
-  
+   
     // calculate the width of the blue rectangle based on the slider position
     float musicSliderWidth = musicSliderX - 200;
     musicSliderWidth = constrain(musicSliderWidth, 0, 240); // clamp the width of the blue rectangle
-  
+    
+    // Calculate the volume based on the slider position
+    float volume = musicSliderWidth / 240.0;
+    
+    // Set the volume of the soundtrack
+    setVolume(soundtrack, volume);
+    
     fill(48, 173, 206); // Blue color
     rect(200, 150, musicSliderWidth, 40, 20); // music volume slider
   
     fill(0); // Black color
     textAlign(CENTER, CENTER);
     text(int(map(musicSliderWidth, 0, 240, 0, 100) + 0.5) + "%", 320, 165); // current music volume
-  
+    
+    
     // SFX volume slider
     fill(224, 148, 25); // orange color
     rect(200, 225, 240, 40, 20); // SFX volume rectangle
@@ -194,27 +215,27 @@ void draw() {
     // calculate the width of the blue rectangle based on the slider position
     float sfxSliderWidth = sfxSliderX - 200;
     sfxSliderWidth = constrain(sfxSliderWidth, 0, 240); // clamp the width of the blue rectangle
-  
-    fill(48, 173, 206); // Blue color
+    
+    fill(48, 173, 206); // blue color
     rect(200, 225, sfxSliderWidth, 40, 20); // SFX volume slider
   
-    fill(0); // Black color
+    fill(0); // black color
     textAlign(CENTER, CENTER);
     text(int(map(sfxSliderWidth, 0, 240, 0, 100) + 0.5) + "%", 320, 240); // current SFX volume
     
-    // Difficulty label
+    // difficulty label
     fill(0); // black color
     textSize(40);
     textAlign(CENTER, CENTER);
     text("Difficulty", 300, 325); // difficulty label
     
-    // Difficulty buttons
+    // difficulty buttons
     drawDifficultyButton(80, 365, "Normal");
     drawDifficultyButton(190, 365, "Medium");
     drawDifficultyButton(300, 365, "Hard");
     drawDifficultyButton(410, 365, "Insane");
     
-    fill(0); // Black color
+    fill(0); // black color
     textAlign(CENTER, CENTER);
     text(difficulty, width/2, 450); // display selected difficulty
     
@@ -224,13 +245,13 @@ void draw() {
     textAlign(CENTER, CENTER);
     text("Game Mode", 300, 525); // game mode label
     
-    // Corruption label
+    // corruption label
     fill(0); // black color
     textSize(35);
     textAlign(CENTER, CENTER);
     text("Corruption", 200, 580);
   
-     // Button
+     // button
     if (isButtonOn) {
       fill(48, 173, 206); // blue color
     } else {
@@ -238,7 +259,7 @@ void draw() {
     }
     rect(350, 560, 100, 50, 20); // button rectangle
   
-    fill(255); // White color
+    fill(255); // white color
     textSize(20);
     textAlign(CENTER, CENTER);
     if (isButtonOn) {
@@ -328,7 +349,7 @@ void draw() {
     } else if (!mousePressed) {
       buttonClicked = false;
     }
-
+  
     returnButton();
   }
   
@@ -344,6 +365,20 @@ void draw() {
     fill(255); // white text color
     textSize(100);
     text("Game Over!", width/2, height/2 - 30); // death screen text
+    returnButton();
+  }
+  
+  if (MODE.equals("won")) {
+    // make the current screen transparent
+    background(255, 255, 255, 100);
+
+    // draw the death screen on top of the transparent background
+    fill(106, 224, 48); // green color
+    rect(width/2 - 200, height/2 - 100, 400, 200, 10); // death screen rectangle
+
+    fill(255); // white text color
+    textSize(100);
+    text("Victory!", width/2, height/2 - 30); // win screen text
     returnButton();
   }
 }
@@ -452,6 +487,7 @@ void keyPressed() {
     if (paused) {
       loop();
       paused = false;
+      
     } else {
       noLoop();
       paused = true;
