@@ -36,6 +36,7 @@ Please look at the diagram below to see what certain keys do!
 Briefly Explaning our Project:
 
 The play button allows the player to start the game. \
+
 The setting button allows the player to change various settings including: 
 - music volume
 - sfx volume
@@ -48,8 +49,11 @@ The setting button allows the player to change various settings including:
 - game mode (corruption) \
     The corruption gamemode has corrupted blocks already locked onto the board and you have to 
     clear these corrupted blocks to the bottom to win the game. \
+
 The instructions button allows the player to view the controls to the game. \
+
 The setups button allows the player to easily get to a scenario to test various functions: 
+
 - T-spins
 - Wall-kicks
 - Line clears
