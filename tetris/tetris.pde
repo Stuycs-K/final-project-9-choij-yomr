@@ -9,7 +9,7 @@ int fallCd, moveCd, moveCounter, rotateCd, rotateCounter;
 boolean paused = false;
 int buttonSpacing = 80;
 int buttonY = 300;
-String difficulty = "normal";
+String difficulty = "Medium";
 float musicSliderX = 320;
 float sfxSliderX = 320;
 boolean isDraggingMusicSlider = false;
@@ -17,11 +17,14 @@ boolean isDraggingSFXSlider = false;
 boolean isButtonOn = false;
 import processing.sound.*;
 SoundFile soundtrack;
-SoundFile blockPlace;
+SoundFile blockPlace; 
 SoundFile lineClear;
 Sound musicVol;
 Sound sfxVol;
 boolean isPlaying = false;
+int[] levels; //speed for each level
+int currentLevel; //the current level
+int scale; //number of linesCleared per level up
 
 void setup() {
   size(600, 800);
@@ -36,16 +39,17 @@ void setup() {
   
   soundtrack = new SoundFile(this, "soundtrack.wav");
   musicVol = new Sound(this);
-  setVolume(soundtrack, 0);
   soundtrack.loop();
   
   blockPlace = new SoundFile(this, "blockPlace.wav");
   lineClear = new SoundFile(this, "lineClear.wav");
   sfxVol = new Sound(this);
   
-  setVolume(soundtrack, 0);
-  setVolume(blockPlace, 0);
-  setVolume(lineClear, 0);
+  setVolume(soundtrack, 0.5);
+  setVolume(blockPlace, 0.5);
+  setVolume(lineClear, 0.5);
+  
+  levels = new int[]{60, 50, 40, 35, 30, 25, 20, 16, 12, 10, 8, 6, 4};
 }
 
 void setVolume(SoundFile file, float Volume){
@@ -89,10 +93,11 @@ void draw() {
       if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY && mouseY < buttonY + 50) {
         //println("Play button clicked.");
         MODE = "play";
-        board = new Board(0);
+        difficultySetUp();
+        board = new Board(0, isButtonOn ,blockPlace, lineClear);
         keyboardInput = new Controller();
         moveCounter = 0;
-        fallCd = 40;
+        fallCd = levels[currentLevel];
         moveCd = 8;
         rotateCounter = 0;
         rotateCd = 20;
@@ -120,6 +125,10 @@ void draw() {
     if (board.getEnd()){
       MODE = "death";
     }
+    
+    if (board.getWin()){
+      MODE = "won";
+    }
 
     // background grey
     background(169);
@@ -142,9 +151,9 @@ void draw() {
 
     // checking for inputs for moving piece down
     if (keyboardInput.isPressed(Controller.myDOWN)) {
-      fallCd = 5;
+      fallCd = levels[currentLevel]/8 + 1;
     } else {
-      fallCd = 40;
+      fallCd = levels[currentLevel];
     }
 
     // checking for inputs for piece rotation
@@ -159,7 +168,12 @@ void draw() {
       }
       rotateCounter++;
     }
-
+    
+    // updating the level
+    if (board.getLinesCleared() % scale == 0 && currentLevel < 12 && board.getCleared()){
+      currentLevel++;
+    }
+    
     // one tick of falling
     board.fallTick(fallCd);
 
@@ -245,7 +259,7 @@ void draw() {
     text("Difficulty", 300, 325); // difficulty label
     
     // difficulty buttons
-    drawDifficultyButton(80, 365, "Normal");
+    drawDifficultyButton(80, 365, "Easy");
     drawDifficultyButton(190, 365, "Medium");
     drawDifficultyButton(300, 365, "Hard");
     drawDifficultyButton(410, 365, "Insane");
@@ -264,7 +278,7 @@ void draw() {
     fill(0); // black color
     textSize(35);
     textAlign(CENTER, CENTER);
-    text("Corruption", 200, 580);
+    text("Corruption:", 200, 580);
   
     // button
     if (isButtonOn) {
@@ -332,30 +346,33 @@ void draw() {
       if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY && mouseY < buttonY + 50) {
         //println("setup 1 clicked.");
         MODE = "play";
-        board = new Board(1);
+        difficultySetUp();
+        board = new Board(1, isButtonOn ,blockPlace, lineClear);
         keyboardInput = new Controller();
         moveCounter = 0;
-        fallCd = 40;
+        fallCd = levels[currentLevel];
         moveCd = 8;
         rotateCounter = 0;
         rotateCd = 20;
       } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + buttonSpacing && mouseY < buttonY + buttonSpacing + 50) {
         //println("setup 2 clicked.");
         MODE = "play";
-        board = new Board(2);
+        difficultySetUp();
+        board = new Board(2, isButtonOn ,blockPlace, lineClear);
         keyboardInput = new Controller();
         moveCounter = 0;
-        fallCd = 40;
+        fallCd = levels[currentLevel];
         moveCd = 8;
         rotateCounter = 0;
         rotateCd = 20;
       } else if (mouseX > (width - 400) / 2 && mouseX < (width - 400) / 2 + 400 && mouseY > buttonY + 2 * buttonSpacing && mouseY < buttonY + 2 * buttonSpacing + 50) {
         //println("setup 3 clicked.");
         MODE = "play";
-        board = new Board(3);
+        difficultySetUp();
+        board = new Board(3, isButtonOn ,blockPlace, lineClear);
         keyboardInput = new Controller();
         moveCounter = 0;
-        fallCd = 40;
+        fallCd = levels[currentLevel];
         moveCd = 8;
         rotateCounter = 0;
         rotateCd = 20;
@@ -387,14 +404,30 @@ void draw() {
     // make the current screen transparent
     background(255, 255, 255, 100);
 
-    // draw the death screen on top of the transparent background
+    // draw the win screen on top of the transparent background
     fill(106, 224, 48); // green color
-    rect(width/2 - 200, height/2 - 100, 400, 200, 10); // death screen rectangle
+    rect(width/2 - 200, height/2 - 100, 400, 200, 10); // win screen rectangle
 
     fill(255); // white text color
     textSize(100);
     text("Victory!", width/2, height/2 - 30); // win screen text
     returnButton();
+  }
+}
+
+void difficultySetUp(){
+  if (difficulty.equals("Easy")){
+    currentLevel = 0;
+    scale = 20;
+  } else if (difficulty.equals("Medium")){
+    currentLevel = 3;
+    scale = 15;
+  } else if (difficulty.equals("Hard")){
+    currentLevel = 3;
+    scale = 10;
+  } else if (difficulty.equals("Insane")){
+    currentLevel = 12;
+    scale = 1;
   }
 }
 
@@ -456,7 +489,7 @@ void mousePressed() {
     } else if (mouseX > 200 && mouseX < 440 && mouseY > 250 && mouseY < 290) {
       sfxSliderX = constrain(mouseX, 200, 440 + sfxSliderX);
     } else if (mouseX > 80 && mouseX < 180 && mouseY > 365 && mouseY < 425) {
-      difficulty = "Normal";
+      difficulty = "Easy";
     } else if (mouseX > 190 && mouseX < 290 && mouseY > 365 && mouseY < 425) {
       difficulty = "Medium";
     } else if (mouseX > 300 && mouseX < 400 && mouseY > 365 && mouseY < 425) {
