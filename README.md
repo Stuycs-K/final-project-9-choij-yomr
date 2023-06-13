@@ -25,6 +25,10 @@ game mode the player can choose to play. We also added sound for better immersio
 
 
 ## Instructions
+IMPORTANT: In order to run the code, you must install a library in processing that can be found by 
+clicking on sketch --> import library --> manage library --> typing sound in the search bar --> downloading
+the library labeled sound by The Processing Foundation
+
 Tetris!
 The objective of Tetris is to complete as many lines as possible by utilizing
 various block combinations in order to not run out of space. 
