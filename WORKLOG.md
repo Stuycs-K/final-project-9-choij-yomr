@@ -1,3 +1,27 @@
+# Dev Log
+
+### Features 
+
+Wall Kicks, T-Spins, Board Creation, Music/SFX, Difficulty Scaling, All menu buttons/sliders, line clears, block placement, 
+holding a piece, showing the next piece, all different types of pieces in Tetris, free fall, hard drops, collosion with other
+blocks, end screen (game over), win screen (for our corruption gamemode), ghost piece (being able to see where your block will
+be placed), line cleared counter, and all our setups for the game.
+
+### Broken Features/Bugs
+
+We wouldn't say it's BROKEN, but when you try to slide the volume/sfx sliders all the way to the left, 
+you can get it to hit zero (albeit sometimes difficult). However, when it does hit zero, sometimes
+a little bit of blue might still show (like a line of blue), which we couldn't fix in time for the 
+final version of the game. It did NOT interfere with actual volume adjusting, which was fine. 
+
+### Content Resources
+
+For music, we had to clip sound of the sounds from a YouTube video to get a specific desired
+sound (because there was a collection of them), so we used DaVinci Resolve Studio to achieve that.
+For any game creation ideas, we usually looked up Tetris online and found pretty good examples
+to follow. In order to create the Tetris logo and instructions page, we used Canva. Wikipedia was 
+also really helpful in determining block rotations and T-spins. 
+
 # Work Log
 
 ## Richard Yom
